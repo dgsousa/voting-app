@@ -14,7 +14,7 @@ const App = () =>
 			<Route component={Header}/>
 			<div className="main">
 				<Route exact path="/" component={Home}/>
-				<Route path="/polls/:topic" component={Poll}/>
+				<Route path="/polls/:poll" component={Poll}/>
 				<Route path="/mypolls" component={MyPolls}/>
 				<Route path="/newpoll" component={NewPollContainer}/>
 			</div>

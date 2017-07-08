@@ -21,7 +21,7 @@ class DropDown extends Component {
 	}
 
 	render() {
-		const {topic, options, vote} = this.props;
+		const {poll, options, user, vote} = this.props;
 		const {option} = this.state;
 		return (
 			<div>
@@ -32,7 +32,7 @@ class DropDown extends Component {
 				</select>
 				<label>Custom: </label>
 				<input type="text" onChange={this.handleChange.bind(this)}/>
-				<button type="submit" onClick={(e) => vote(topic, option, "alpha")}>Submit</button>
+				<button type="submit" onClick={(e) => vote(poll, option, user)}>Submit</button>
 			</div>
 		)
 	}
@@ -40,9 +40,12 @@ class DropDown extends Component {
 
 
 const mapStateToProps = (state, ownProps) => ({
-	options: Object.keys(ownProps.poll.options),
-	topic: ownProps.match.params.topic
+	poll: ownProps.match.params.poll,
+	options: Object.keys(state.polls[ownProps.match.params.poll].options),
+	user: state.user
 })
+
+
 
 
 const DropDownContainer = withRouter(connect(

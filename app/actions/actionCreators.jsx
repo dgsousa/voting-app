@@ -1,52 +1,45 @@
 import database from "../database";
+import v4 from "uuid/v4";
 
 
-export const vote = (topic, option, user) => (dispatch, getState) => {
-	if(getState()["polls"][topic]["voted"][user]) return;
+export const vote = (poll, option, user) => (dispatch, getState) => {
+	if(getState()["polls"][poll]["voted"][user]) return;
 	return dispatch({
 		type: "VOTE",
-		topic,
+		poll,
 		option,
 		user
 	})
 }
 
-
-// export const pollAdded = (dispatch) => 
-// 	database.ref("/polls/").on("child_added", snap => {
-// 		return dispatch({
-// 			type: "ADD_POLL",
-// 			poll: snap.val()
-// 		})
-// 	})
 	
 
-export const addPoll = (topic, optionsArray, creator) => (dispatch, getState) => {
-	if(getState()["polls"][topic] || !topic || !optionsArray.length) return;
-	let options = transformOptions(optionsArray);
-	// database.ref("polls/").push({
-	// 	[poll]: {
-	// 		["creator"]: user,
-	// 		["voted"]: {},
-	// 		["options"]: options
-	// 	}
-	// });
-	return dispatch({
-		type: "ADD_POLL",
-		topic,
-		options,
-		creator
-	})
+export const addPoll = (poll, optionsArray, creator) => (dispatch, getState) => {
+	if(getState()["polls"][poll] || !poll || !optionsArray.length) return;
+	const options = transformOptions(optionsArray);
+	const key = database.ref("polls/").push({
+		[poll]: {
+			id: v4(),
+			creator: creator,
+			voted: {},
+			options: options
+		}
+	}).key;
+
+	console.log(database.ref("polls/").child(poll));
 }
 
 
-export const deletePoll = (topic, user) => (dispatch, getState) => {
-	if(getState()["polls"][topic].creator !== user) return;
-	return dispatch({
-		type: "DELETE_POLL",
-		topic
-	})
+export const deletePoll = (poll) =>  (dispatch) => {
+	database.ref("polls/" + poll).push("hello");
+
+	// return dispatch({
+	// 	type: "DELETE_POLL",
+	// 	poll
+	// })
 }
+
+//helper functions
 
 const transformOptions = (optionsArray) => {
 	const options = {};

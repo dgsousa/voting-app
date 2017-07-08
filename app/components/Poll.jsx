@@ -13,7 +13,7 @@ let Poll = ({poll}) =>
 
 const mapStateToProps = (state, ownProps) => ({
 	poll: Object.keys(state.polls).reduce((prev, curr) => {
-		return curr === ownProps.match.params.topic ? state.polls[curr] : prev;
+		return curr === ownProps.match.params.poll ? state.polls[curr] : prev;
 	}, null)
 })
 

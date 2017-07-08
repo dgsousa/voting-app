@@ -5,22 +5,20 @@ import {connect} from "react-redux";
 
 let Home = ({polls}) => 
 	<div>
-		<ul>{Object.keys(polls).map((poll, index) => {
-				if(polls[poll]) {
-					const location = `/polls/${poll}`;
-					return (
-						<li key={index}>
-							<NavLink to={location}>{poll}</NavLink>
-						</li>
-					)	
-				}
+		<ul>{polls.map((poll, index) => {
+				const location = `/polls/${poll}`;
+				return (
+					<li key={index}>
+						<NavLink to={location}>{poll}</NavLink>
+					</li>
+				)	
 			})}
 		</ul>
 	</div>
 
 
 const mapStateToProps = (state) => ({
-	polls: state.polls
+	polls: Object.keys(state.polls).filter(key => state.polls[key])
 })
 
 	

@@ -5,8 +5,8 @@ import {connect} from "react-redux";
 
 let Chart = ({options}) => 
 	<div>
-		<ul>{Object.keys(options).map((option, index) => 
-			<li key={index}>{`${option}: ${options[option]}`}</li>
+		<ul>{Object.keys(options).map((key, index) => 
+			<li key={index}>{`${key}: ${options[key]}`}</li>
 		)}</ul>
 	</div>
 

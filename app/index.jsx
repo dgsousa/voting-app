@@ -6,13 +6,11 @@ import thunk from "redux-thunk";
 import App from "./components/App.jsx";
 import v4 from "uuid/v4";
 import appReducer from "./reducers/reducer.jsx";
+import {addedPollsEventListener} from "./event_listeners";
 import "./scss/styles.scss";
 
 
-
-console.log({
-	[v4()]: "test"
-})
+ 
 
 
 
@@ -21,8 +19,8 @@ const initialData = {
 	polls: {
 		
 		countries: {
-			creator: "alpha",
 			id: v4(),
+			creator: "alpha",
 			voted: {},
 			options: {
 				"United States": 0,
@@ -31,9 +29,9 @@ const initialData = {
 			}
 		},
 		
-		colors: {	
-			creator: "beta",
+		colors: {
 			id: v4(),
+			creator: "beta",
 			voted: {},
 			options: {
 				"red": 0,
@@ -41,7 +39,9 @@ const initialData = {
 				"yellow": 0
 			}
 		}
-	}
+	},
+
+	user: "alpha"
 }
 	
 
@@ -51,7 +51,9 @@ const createStoreWithMiddleWare = compose(
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )(createStore);
 
-const store = createStoreWithMiddleWare(appReducer, initialData);
+const store = createStoreWithMiddleWare(appReducer);
+
+addedPollsEventListener(store);
 
 
 ReactDOM.render(

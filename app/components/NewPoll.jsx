@@ -8,13 +8,13 @@ class NewPoll extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			topic: "",
+			poll: "",
 			options: [] 
 		}
 	}
 	
 	updateTopic(e) {
-		this.setState({topic: e.target.value});
+		this.setState({poll: e.target.value});
 	}
 
 	updateOptions(e) {
@@ -22,23 +22,27 @@ class NewPoll extends Component {
 	}
 	
 	render() {
-		const {topic, options} = this.state;
-		const {addPoll} = this.props;
+		const {poll, options} = this.state;
+		const {addPoll, user} = this.props;
 		return (
 			<div>
-				<span>Title: </span><input type="text" value={topic} onChange={this.updateTopic.bind(this)}/>
+				<span>Title: </span><input type="text" value={poll} onChange={this.updateTopic.bind(this)}/>
 				<span>Options: </span><input type="textarea" value={options} onChange={this.updateOptions.bind(this)}/>
-				<NavLink to={`/polls/${topic}`}>
-					<button onClick={(e) => addPoll(topic, options, "beta")}>Submit</button>
+				<NavLink to={`/polls/${poll}`}>
+					<button onClick={(e) => addPoll(poll, options, user)}>Submit</button>
 				</NavLink>
 			</div>
 		)
 	}
 };
 
+const mapStateToProps = (state) => ({
+	user: state.user
+})
+
 
 const NewPollContainer = connect(
-	null,	
+	mapStateToProps,	
 	{addPoll}
 )(NewPoll);
 
