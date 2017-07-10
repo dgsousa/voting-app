@@ -8,13 +8,13 @@ class NewPoll extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			poll: "",
+			topic: "",
 			options: [] 
 		}
 	}
 	
 	updateTopic(e) {
-		this.setState({poll: e.target.value});
+		this.setState({topic: e.target.value});
 	}
 
 	updateOptions(e) {
@@ -22,14 +22,14 @@ class NewPoll extends Component {
 	}
 	
 	render() {
-		const {poll, options} = this.state;
+		const {topic, options} = this.state;
 		const {addPoll, user} = this.props;
 		return (
 			<div>
-				<span>Title: </span><input type="text" value={poll} onChange={this.updateTopic.bind(this)}/>
+				<span>Title: </span><input type="text" value={topic} onChange={this.updateTopic.bind(this)}/>
 				<span>Options: </span><input type="textarea" value={options} onChange={this.updateOptions.bind(this)}/>
-				<NavLink to={`/polls/${poll}`}>
-					<button onClick={(e) => addPoll(poll, options, user)}>Submit</button>
+				<NavLink to={`/`}>
+					<button onClick={(e) => addPoll(topic, options, user)}>Submit</button>
 				</NavLink>
 			</div>
 		)

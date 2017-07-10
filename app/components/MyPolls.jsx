@@ -4,24 +4,27 @@ import {connect} from "react-redux";
 import {deletePoll} from "../actions/actionCreators.jsx";
 
 
-let MyPolls = ({polls, deletePoll}) => 
+let MyPolls = ({polls, user, deletePoll}) => 
 	<div>
-		<ul>{polls.map((poll, index) => {
-				const location = `/polls/${poll}`;
-				return (
-					<li key={index}>
-						<NavLink to={location}>{poll}</NavLink>
-						<button onClick={(e) => {deletePoll(poll)}}>Delete Poll</button>
-					</li>
-				)
+		<ul>{Object.keys(polls).map((id) => {
+				if(polls[id] && polls[id].creator === user) {
+					const location = `/polls/${id}`;
+					const topic = polls[id].topic;
+					return (
+						<li key={id}>
+							<NavLink to={location}>{topic}</NavLink>
+							<button onClick={(e) => {deletePoll(id)}}>Delete Poll</button>
+						</li>
+					)
+				}
 			})}
 		</ul>
 	</div>
 
 
-
 const mapStateToProps = (state) => ({
-	polls: Object.keys(state.polls).filter(key => state.polls[key] && state.polls[key].creator === state.user)
+	polls: state.polls,
+	user: state.user
 })
 
 	

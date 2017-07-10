@@ -5,6 +5,7 @@ import MyPolls from "./MyPolls.jsx";
 import NewPollContainer from "./NewPoll.jsx";
 import Header from "./Header.jsx";
 import Poll from "./Poll.jsx";
+import Login from "./Login.jsx";
 
 
 
@@ -14,9 +15,10 @@ const App = () =>
 			<Route component={Header}/>
 			<div className="main">
 				<Route exact path="/" component={Home}/>
-				<Route path="/polls/:poll" component={Poll}/>
+				<Route path="/polls/:id" component={Poll}/>
 				<Route path="/mypolls" component={MyPolls}/>
 				<Route path="/newpoll" component={NewPollContainer}/>
+				<Route path="/login" component={Login}>
 			</div>
 		</div>
 	</Router>

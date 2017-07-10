@@ -9,14 +9,23 @@ const pollsReducer = (state = {}, action) => {
 	case "ADD_POLL":
 		return {
 			...state,
-			[action.poll]: pollReducer(state[action.poll], action)
+			[action.id]: pollReducer(state[action.id], action)
 		}
 	
 	case "DELETE_POLL":
 		return {
 			...state,
-			[action.poll]: null
+			[action.id]: null
 		}
+	}
+	return state;
+}
+
+
+const topicReducer = (state = null, action) => {
+	switch(action.type) {
+	case "ADD_POLL":
+		return action.topic
 	}
 	return state;
 }
@@ -34,10 +43,10 @@ const creatorReducer = (state = null, action) => {
 
 const votedReducer = (state = {}, action) => {
 	switch(action.type) {
+	case "ADD_POLL":
 	case "VOTE": 
 		return {
-			...state, 
-			[action.user]: true
+			...action.voted
 		}
 	}
 	return state;
@@ -46,14 +55,8 @@ const votedReducer = (state = {}, action) => {
 
 const optionsReducer = (state = {}, action) => {
 	switch(action.type) {
-
-	case "VOTE":
-		return {
-			...state,
-			[action.option]: ++state[action.option] || 1
-		}
-	
 	case "ADD_POLL":
+	case "VOTE":
 		return {
 			...action.options
 		}
@@ -62,14 +65,6 @@ const optionsReducer = (state = {}, action) => {
 }
 
 
-const idReducer = (state = null, action) => {
-	switch(action.type) {
-
-		case "ADD_POLL":
-			return action.id
-	}
-	return state;
-}
 
 const appReducer = combineReducers({
 	polls: pollsReducer,
@@ -77,10 +72,10 @@ const appReducer = combineReducers({
 });
 
 const pollReducer = combineReducers({
+	topic: topicReducer,
 	creator: creatorReducer,
 	voted: votedReducer,
-	options: optionsReducer,
-	id: idReducer
+	options: optionsReducer
 })
 
 

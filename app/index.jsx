@@ -4,47 +4,20 @@ import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import App from "./components/App.jsx";
+import * as firebase from "firebase";
 import v4 from "uuid/v4";
 import appReducer from "./reducers/reducer.jsx";
-import {addedPollsEventListener} from "./event_listeners";
+import addEventListeners from "./event_listeners";
 import "./scss/styles.scss";
 
 
- 
+const provider = new firebase.auth.GithubAuthProvider();
 
 
 
-const initialData = {
-	
-	polls: {
-		
-		countries: {
-			id: v4(),
-			creator: "alpha",
-			voted: {},
-			options: {
-				"United States": 0,
-				"Mexico": 0,
-				"Canada": 0
-			}
-		},
-		
-		colors: {
-			id: v4(),
-			creator: "beta",
-			voted: {},
-			options: {
-				"red": 0,
-				"green": 0,
-				"yellow": 0
-			}
-		}
-	},
-
-	user: "alpha"
-}
-	
-
+firebase.auth().signInWithRedirect(provider).then(result => {
+	console.log(result.credential.accessToken);
+})
 
 const createStoreWithMiddleWare = compose(
 	applyMiddleware(thunk), 
@@ -53,8 +26,7 @@ const createStoreWithMiddleWare = compose(
 
 const store = createStoreWithMiddleWare(appReducer);
 
-addedPollsEventListener(store);
-
+addEventListeners(store);
 
 ReactDOM.render(
 	<Provider store={store}>

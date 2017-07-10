@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 151);
+/******/ 	return __webpack_require__(__webpack_require__.s = 152);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -3652,7 +3652,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _firebase_app = __webpack_require__(167);
+var _firebase_app = __webpack_require__(168);
 
 // Export a single instance of firebase app
 var firebase = (0, _firebase_app.createFirebaseNamespace)(); /**
@@ -5855,57 +5855,56 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deletePoll = exports.addPoll = exports.vote = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _database = __webpack_require__(84);
 
 var _database2 = _interopRequireDefault(_database);
-
-var _v = __webpack_require__(83);
-
-var _v2 = _interopRequireDefault(_v);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var vote = exports.vote = function vote(poll, option, user) {
+var vote = exports.vote = function vote(id, option) {
 	return function (dispatch, getState) {
-		if (getState()["polls"][poll]["voted"][user]) return;
-		return dispatch({
-			type: "VOTE",
-			poll: poll,
-			option: option,
-			user: user
+		var _getState = getState(),
+		    polls = _getState.polls,
+		    user = _getState.user;
+
+		if (polls[id]["voted"][user]) return;
+		_database2.default.ref("polls/" + id).transaction(function (state) {
+			var _extends4;
+
+			return _extends({}, state, (_extends4 = {}, _defineProperty(_extends4, "voted", _extends({}, state["voted"], _defineProperty({}, user, true))), _defineProperty(_extends4, "options", _extends({}, state.options, _defineProperty({}, option, state.options[option] + 1 || 1))), _extends4));
 		});
 	};
 };
 
-var addPoll = exports.addPoll = function addPoll(poll, optionsArray, creator) {
+var addPoll = exports.addPoll = function addPoll(topic, optionsArray, creator) {
 	return function (dispatch, getState) {
-		if (getState()["polls"][poll] || !poll || !optionsArray.length) return;
+		if (checkForPoll(getState(), topic) || !topic || !optionsArray.length) return;
 		var options = transformOptions(optionsArray);
-		var key = _database2.default.ref("polls/").push(_defineProperty({}, poll, {
-			id: (0, _v2.default)(),
+		_database2.default.ref("polls/").push({
+			topic: topic,
 			creator: creator,
 			voted: {},
 			options: options
-		})).key;
-
-		console.log(_database2.default.ref("polls/").child(poll));
+		});
 	};
 };
 
-var deletePoll = exports.deletePoll = function deletePoll(poll) {
+var deletePoll = exports.deletePoll = function deletePoll(id) {
 	return function (dispatch) {
-		_database2.default.ref("polls/" + poll).push("hello");
-
-		// return dispatch({
-		// 	type: "DELETE_POLL",
-		// 	poll
-		// })
+		_database2.default.ref("polls/" + id + "/").remove();
 	};
 };
 
 //helper functions
+var checkForPoll = function checkForPoll(state, topic) {
+	return Object.keys(state.polls).some(function (id) {
+		return state.polls[id] && state.polls[id].topic === topic;
+	});
+};
 
 var transformOptions = function transformOptions(optionsArray) {
 	var options = {};
@@ -9340,35 +9339,37 @@ module.exports = ReactNoopUpdateQueue;
 /* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(329);
-var bytesToUuid = __webpack_require__(328);
+"use strict";
+/*! @license Firebase v4.1.3
+Build: rev-1234895
+Terms: https://firebase.google.com/terms/ */
 
-function v4(options, buf, offset) {
-  var i = buf && offset || 0;
 
-  if (typeof(options) == 'string') {
-    buf = options == 'binary' ? new Array(16) : null;
-    options = null;
-  }
-  options = options || {};
 
-  var rnds = options.random || (options.rng || rng)();
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+var _app = __webpack_require__(32);
 
-  // Copy bytes to buffer, if provided
-  if (buf) {
-    for (var ii = 0; ii < 16; ++ii) {
-      buf[i + ii] = rnds[ii];
-    }
-  }
+var _app2 = _interopRequireDefault(_app);
 
-  return buf || bytesToUuid(rnds);
-}
+__webpack_require__(169);
 
-module.exports = v4;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Import instance of FirebaseApp from ./app
+var Storage, XMLHttpRequest;
+
+__webpack_require__(170);
+__webpack_require__(178);
+var AsyncStorage;
+
+__webpack_require__(171);
+// Export the single instance of firebase
+exports.default = _app2.default;
+module.exports = exports['default'];
+//# sourceMappingURL=firebase-browser.js.map
 
 
 /***/ }),
@@ -9377,7 +9378,7 @@ module.exports = v4;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_firebase__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_firebase__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_firebase__);
 
 
@@ -9391,9 +9392,9 @@ const config = {
     messagingSenderId: "517098115982"
   };
   
-__WEBPACK_IMPORTED_MODULE_0_firebase___default.a.initializeApp(config);
+__WEBPACK_IMPORTED_MODULE_0_firebase__["initializeApp"](config);
 
-const database = __WEBPACK_IMPORTED_MODULE_0_firebase___default.a.database();
+const database = __WEBPACK_IMPORTED_MODULE_0_firebase__["database"]();
 
 /* harmony default export */ __webpack_exports__["default"] = (database);
 
@@ -12850,7 +12851,7 @@ module.exports = ReactHostComponent;
 
 var ReactDOMSelection = __webpack_require__(230);
 
-var containsNode = __webpack_require__(154);
+var containsNode = __webpack_require__(155);
 var focusNode = __webpack_require__(86);
 var getActiveElement = __webpack_require__(87);
 
@@ -15562,17 +15563,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const addedPollsEventListener = (store) => 
 	__WEBPACK_IMPORTED_MODULE_0__database__["default"].ref("/polls/").on("child_added", snap => {
 		const val = snap.val();
-		const poll = Object.keys(val)[0];
-
+		const key = snap.key;
 		store.dispatch({
 			type: "ADD_POLL",
-			id: val[poll].id,
-			creator: val[poll].creator,
-			poll: poll,
-			options: val[poll].options
+			id: snap.key,
+			topic: val.topic,
+			creator: val.creator,
+			options: val.options,
+			voted: val.voted
 		})
 	})
-/* harmony export (immutable) */ __webpack_exports__["addedPollsEventListener"] = addedPollsEventListener;
+
+
+const deletePollEventListener = (store) =>
+	__WEBPACK_IMPORTED_MODULE_0__database__["default"].ref("/polls/").on("child_removed", snap => {
+		const id = snap.key;
+		store.dispatch({
+			type: "DELETE_POLL",
+			id
+		})
+	})
+
+
+const voteEventListener = (store) =>
+	__WEBPACK_IMPORTED_MODULE_0__database__["default"].ref("/polls/").on("child_changed", snap => {
+		const id = snap.key;
+		const {options, voted} = snap.val();
+		store.dispatch({
+			type: "VOTE",
+			id,
+			options,
+			voted
+		})
+	})
+
+
+
+const addEventListeners = (store) => {
+	addedPollsEventListener(store);
+	deletePollEventListener(store);
+	voteEventListener(store);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (addEventListeners);
+
+
+
 
 
 /***/ }),
@@ -15592,23 +15628,23 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(28);
 
-var _Home = __webpack_require__(147);
+var _Home = __webpack_require__(148);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _MyPolls = __webpack_require__(148);
+var _MyPolls = __webpack_require__(149);
 
 var _MyPolls2 = _interopRequireDefault(_MyPolls);
 
-var _NewPoll = __webpack_require__(149);
+var _NewPoll = __webpack_require__(150);
 
 var _NewPoll2 = _interopRequireDefault(_NewPoll);
 
-var _Header = __webpack_require__(146);
+var _Header = __webpack_require__(147);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _Poll = __webpack_require__(150);
+var _Poll = __webpack_require__(151);
 
 var _Poll2 = _interopRequireDefault(_Poll);
 
@@ -15626,7 +15662,7 @@ var App = function App() {
 				"div",
 				{ className: "main" },
 				_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Home2.default }),
-				_react2.default.createElement(_reactRouterDom.Route, { path: "/polls/:poll", component: _Poll2.default }),
+				_react2.default.createElement(_reactRouterDom.Route, { path: "/polls/:id", component: _Poll2.default }),
 				_react2.default.createElement(_reactRouterDom.Route, { path: "/mypolls", component: _MyPolls2.default }),
 				_react2.default.createElement(_reactRouterDom.Route, { path: "/newpoll", component: _NewPoll2.default })
 			)
@@ -15660,10 +15696,21 @@ var pollsReducer = function pollsReducer() {
 	switch (action.type) {
 		case "VOTE":
 		case "ADD_POLL":
-			return _extends({}, state, _defineProperty({}, action.poll, pollReducer(state[action.poll], action)));
+			return _extends({}, state, _defineProperty({}, action.id, pollReducer(state[action.id], action)));
 
 		case "DELETE_POLL":
-			return _extends({}, state, _defineProperty({}, action.poll, null));
+			return _extends({}, state, _defineProperty({}, action.id, null));
+	}
+	return state;
+};
+
+var topicReducer = function topicReducer() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	var action = arguments[1];
+
+	switch (action.type) {
+		case "ADD_POLL":
+			return action.topic;
 	}
 	return state;
 };
@@ -15684,8 +15731,9 @@ var votedReducer = function votedReducer() {
 	var action = arguments[1];
 
 	switch (action.type) {
+		case "ADD_POLL":
 		case "VOTE":
-			return _extends({}, state, _defineProperty({}, action.user, true));
+			return _extends({}, action.voted);
 	}
 	return state;
 };
@@ -15695,24 +15743,9 @@ var optionsReducer = function optionsReducer() {
 	var action = arguments[1];
 
 	switch (action.type) {
-
+		case "ADD_POLL":
 		case "VOTE":
-			return _extends({}, state, _defineProperty({}, action.option, ++state[action.option] || 1));
-
-		case "ADD_POLL":
 			return _extends({}, action.options);
-	}
-	return state;
-};
-
-var idReducer = function idReducer() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-	var action = arguments[1];
-
-	switch (action.type) {
-
-		case "ADD_POLL":
-			return action.id;
 	}
 	return state;
 };
@@ -15726,10 +15759,10 @@ var appReducer = (0, _redux.combineReducers)({
 });
 
 var pollReducer = (0, _redux.combineReducers)({
+	topic: topicReducer,
 	creator: creatorReducer,
 	voted: votedReducer,
-	options: optionsReducer,
-	id: idReducer
+	options: optionsReducer
 });
 
 exports.default = appReducer;
@@ -15783,6 +15816,41 @@ exports['default'] = thunk;
 /* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var rng = __webpack_require__(329);
+var bytesToUuid = __webpack_require__(328);
+
+function v4(options, buf, offset) {
+  var i = buf && offset || 0;
+
+  if (typeof(options) == 'string') {
+    buf = options == 'binary' ? new Array(16) : null;
+    options = null;
+  }
+  options = options || {};
+
+  var rnds = options.random || (options.rng || rng)();
+
+  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+  // Copy bytes to buffer, if provided
+  if (buf) {
+    for (var ii = 0; ii < 16; ++ii) {
+      buf[i + ii] = rnds[ii];
+    }
+  }
+
+  return buf || bytesToUuid(rnds);
+}
+
+module.exports = v4;
+
+
+/***/ }),
+/* 145 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -15828,7 +15896,7 @@ Chart = (0, _reactRedux.connect)(mapStateToProps)(Chart);
 exports.default = Chart;
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15886,7 +15954,7 @@ var DropDown = function (_Component) {
 		key: "render",
 		value: function render() {
 			var _props = this.props,
-			    poll = _props.poll,
+			    id = _props.id,
 			    options = _props.options,
 			    user = _props.user,
 			    vote = _props.vote;
@@ -15915,7 +15983,7 @@ var DropDown = function (_Component) {
 				_react2.default.createElement(
 					"button",
 					{ type: "submit", onClick: function onClick(e) {
-							return vote(poll, option, user);
+							return vote(id, option);
 						} },
 					"Submit"
 				)
@@ -15928,9 +15996,8 @@ var DropDown = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
 	return {
-		poll: ownProps.match.params.poll,
-		options: Object.keys(state.polls[ownProps.match.params.poll].options),
-		user: state.user
+		id: ownProps.match.params.id,
+		options: Object.keys(state.polls[ownProps.match.params.id].options)
 	};
 };
 
@@ -15939,7 +16006,7 @@ var DropDownContainer = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)
 exports.default = DropDownContainer;
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15986,7 +16053,7 @@ var Header = function Header() {
 exports.default = Header;
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16014,17 +16081,20 @@ var Home = function Home(_ref) {
 		_react2.default.createElement(
 			"ul",
 			null,
-			polls.map(function (poll, index) {
-				var location = "/polls/" + poll;
-				return _react2.default.createElement(
-					"li",
-					{ key: index },
-					_react2.default.createElement(
-						_reactRouterDom.NavLink,
-						{ to: location },
-						poll
-					)
-				);
+			Object.keys(polls).map(function (id) {
+				if (polls[id]) {
+					var location = "/polls/" + id;
+					var topic = polls[id].topic;
+					return _react2.default.createElement(
+						"li",
+						{ key: id },
+						_react2.default.createElement(
+							_reactRouterDom.NavLink,
+							{ to: location },
+							topic
+						)
+					);
+				}
 			})
 		)
 	);
@@ -16032,9 +16102,7 @@ var Home = function Home(_ref) {
 
 var mapStateToProps = function mapStateToProps(state) {
 	return {
-		polls: Object.keys(state.polls).filter(function (key) {
-			return state.polls[key];
-		})
+		polls: state.polls
 	};
 };
 
@@ -16043,7 +16111,7 @@ Home = (0, _reactRedux.connect)(mapStateToProps)(Home);
 exports.default = Home;
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16067,6 +16135,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var MyPolls = function MyPolls(_ref) {
 	var polls = _ref.polls,
+	    user = _ref.user,
 	    deletePoll = _ref.deletePoll;
 	return _react2.default.createElement(
 		"div",
@@ -16074,24 +16143,27 @@ var MyPolls = function MyPolls(_ref) {
 		_react2.default.createElement(
 			"ul",
 			null,
-			polls.map(function (poll, index) {
-				var location = "/polls/" + poll;
-				return _react2.default.createElement(
-					"li",
-					{ key: index },
-					_react2.default.createElement(
-						_reactRouterDom.NavLink,
-						{ to: location },
-						poll
-					),
-					_react2.default.createElement(
-						"button",
-						{ onClick: function onClick(e) {
-								deletePoll(poll);
-							} },
-						"Delete Poll"
-					)
-				);
+			Object.keys(polls).map(function (id) {
+				if (polls[id] && polls[id].creator === user) {
+					var location = "/polls/" + id;
+					var topic = polls[id].topic;
+					return _react2.default.createElement(
+						"li",
+						{ key: id },
+						_react2.default.createElement(
+							_reactRouterDom.NavLink,
+							{ to: location },
+							topic
+						),
+						_react2.default.createElement(
+							"button",
+							{ onClick: function onClick(e) {
+									deletePoll(id);
+								} },
+							"Delete Poll"
+						)
+					);
+				}
 			})
 		)
 	);
@@ -16099,9 +16171,8 @@ var MyPolls = function MyPolls(_ref) {
 
 var mapStateToProps = function mapStateToProps(state) {
 	return {
-		polls: Object.keys(state.polls).filter(function (key) {
-			return state.polls[key] && state.polls[key].creator === state.user;
-		})
+		polls: state.polls,
+		user: state.user
 	};
 };
 
@@ -16110,7 +16181,7 @@ MyPolls = (0, _reactRedux.connect)(mapStateToProps, { deletePoll: _actionCreator
 exports.default = MyPolls;
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16149,7 +16220,7 @@ var NewPoll = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (NewPoll.__proto__ || Object.getPrototypeOf(NewPoll)).call(this, props));
 
 		_this.state = {
-			poll: "",
+			topic: "",
 			options: []
 		};
 		return _this;
@@ -16158,7 +16229,7 @@ var NewPoll = function (_Component) {
 	_createClass(NewPoll, [{
 		key: "updateTopic",
 		value: function updateTopic(e) {
-			this.setState({ poll: e.target.value });
+			this.setState({ topic: e.target.value });
 		}
 	}, {
 		key: "updateOptions",
@@ -16169,7 +16240,7 @@ var NewPoll = function (_Component) {
 		key: "render",
 		value: function render() {
 			var _state = this.state,
-			    poll = _state.poll,
+			    topic = _state.topic,
 			    options = _state.options;
 			var _props = this.props,
 			    addPoll = _props.addPoll,
@@ -16183,7 +16254,7 @@ var NewPoll = function (_Component) {
 					null,
 					"Title: "
 				),
-				_react2.default.createElement("input", { type: "text", value: poll, onChange: this.updateTopic.bind(this) }),
+				_react2.default.createElement("input", { type: "text", value: topic, onChange: this.updateTopic.bind(this) }),
 				_react2.default.createElement(
 					"span",
 					null,
@@ -16192,11 +16263,11 @@ var NewPoll = function (_Component) {
 				_react2.default.createElement("input", { type: "textarea", value: options, onChange: this.updateOptions.bind(this) }),
 				_react2.default.createElement(
 					_reactRouterDom.NavLink,
-					{ to: "/polls/" + poll },
+					{ to: "/" },
 					_react2.default.createElement(
 						"button",
 						{ onClick: function onClick(e) {
-								return addPoll(poll, options, user);
+								return addPoll(topic, options, user);
 							} },
 						"Submit"
 					)
@@ -16221,7 +16292,7 @@ var NewPollContainer = (0, _reactRedux.connect)(mapStateToProps, { addPoll: _act
 exports.default = NewPollContainer;
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16237,11 +16308,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(19);
 
-var _Chart = __webpack_require__(144);
+var _Chart = __webpack_require__(145);
 
 var _Chart2 = _interopRequireDefault(_Chart);
 
-var _DropDown = __webpack_require__(145);
+var _DropDown = __webpack_require__(146);
 
 var _DropDown2 = _interopRequireDefault(_DropDown);
 
@@ -16260,7 +16331,7 @@ var Poll = function Poll(_ref) {
 var mapStateToProps = function mapStateToProps(state, ownProps) {
 	return {
 		poll: Object.keys(state.polls).reduce(function (prev, curr) {
-			return curr === ownProps.match.params.poll ? state.polls[curr] : prev;
+			return curr === ownProps.match.params.id ? state.polls[curr] : prev;
 		}, null)
 	};
 };
@@ -16270,7 +16341,7 @@ Poll = (0, _reactRedux.connect)(mapStateToProps)(Poll);
 exports.default = Poll;
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16296,7 +16367,11 @@ var _App = __webpack_require__(139);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _v = __webpack_require__(83);
+var _firebase = __webpack_require__(83);
+
+var firebase = _interopRequireWildcard(_firebase);
+
+var _v = __webpack_require__(144);
 
 var _v2 = _interopRequireDefault(_v);
 
@@ -16306,45 +16381,25 @@ var _reducer2 = _interopRequireDefault(_reducer);
 
 var _event_listeners = __webpack_require__(138);
 
+var _event_listeners2 = _interopRequireDefault(_event_listeners);
+
 __webpack_require__(141);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var initialData = {
+var provider = new firebase.auth.GithubAuthProvider();
 
-	polls: {
-
-		countries: {
-			id: (0, _v2.default)(),
-			creator: "alpha",
-			voted: {},
-			options: {
-				"United States": 0,
-				"Mexico": 0,
-				"Canada": 0
-			}
-		},
-
-		colors: {
-			id: (0, _v2.default)(),
-			creator: "beta",
-			voted: {},
-			options: {
-				"red": 0,
-				"green": 0,
-				"yellow": 0
-			}
-		}
-	},
-
-	user: "alpha"
-};
+firebase.auth().signInWithRedirect(provider).then(function (result) {
+	console.log(result.credential.accessToken);
+});
 
 var createStoreWithMiddleWare = (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())(_redux.createStore);
 
 var store = createStoreWithMiddleWare(_reducer2.default);
 
-(0, _event_listeners.addedPollsEventListener)(store);
+(0, _event_listeners2.default)(store);
 
 _reactDom2.default.render(_react2.default.createElement(
 	_reactRedux.Provider,
@@ -16353,7 +16408,7 @@ _reactDom2.default.render(_react2.default.createElement(
 ), document.getElementById("app"));
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16390,7 +16445,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16407,7 +16462,7 @@ module.exports = camelize;
 
 
 
-var camelize = __webpack_require__(152);
+var camelize = __webpack_require__(153);
 
 var msPattern = /^-ms-/;
 
@@ -16435,7 +16490,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16452,7 +16507,7 @@ module.exports = camelizeStyleName;
  * 
  */
 
-var isTextNode = __webpack_require__(162);
+var isTextNode = __webpack_require__(163);
 
 /*eslint-disable no-bitwise */
 
@@ -16480,7 +16535,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16613,7 +16668,7 @@ module.exports = createArrayFromMixed;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16634,8 +16689,8 @@ module.exports = createArrayFromMixed;
 
 var ExecutionEnvironment = __webpack_require__(7);
 
-var createArrayFromMixed = __webpack_require__(155);
-var getMarkupWrap = __webpack_require__(157);
+var createArrayFromMixed = __webpack_require__(156);
+var getMarkupWrap = __webpack_require__(158);
 var invariant = __webpack_require__(1);
 
 /**
@@ -16703,7 +16758,7 @@ module.exports = createNodesFromMarkup;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16804,7 +16859,7 @@ module.exports = getMarkupWrap;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16848,7 +16903,7 @@ function getUnboundedScrollPosition(scrollable) {
 module.exports = getUnboundedScrollPosition;
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16886,7 +16941,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16903,7 +16958,7 @@ module.exports = hyphenate;
 
 
 
-var hyphenate = __webpack_require__(159);
+var hyphenate = __webpack_require__(160);
 
 var msPattern = /^ms-/;
 
@@ -16930,7 +16985,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16960,7 +17015,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16977,7 +17032,7 @@ module.exports = isNode;
  * @typechecks
  */
 
-var isNode = __webpack_require__(161);
+var isNode = __webpack_require__(162);
 
 /**
  * @param {*} object The object to check.
@@ -16990,7 +17045,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17025,7 +17080,7 @@ function memoizeStringOnly(callback) {
 module.exports = memoizeStringOnly;
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17053,7 +17108,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = performance || {};
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17070,7 +17125,7 @@ module.exports = performance || {};
  * @typechecks
  */
 
-var performance = __webpack_require__(164);
+var performance = __webpack_require__(165);
 
 var performanceNow;
 
@@ -17092,7 +17147,7 @@ if (performance.now) {
 module.exports = performanceNow;
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17194,7 +17249,7 @@ function patchProperty(obj, prop, value) {
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17233,7 +17288,7 @@ var _errors = __webpack_require__(52);
 
 var _shared_promise = __webpack_require__(53);
 
-var _deep_copy = __webpack_require__(166);
+var _deep_copy = __webpack_require__(167);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17600,7 +17655,7 @@ var appErrors = new _errors.ErrorFactory('app', 'Firebase', errors);
 
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*! @license Firebase v4.1.3
@@ -17884,7 +17939,7 @@ c){a=new T(a);c({INTERNAL:{getUid:t(a.getUid,a),getToken:t(a.bf,a),addAuthTokenL
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30)))
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*! @license Firebase v4.1.3
@@ -18152,43 +18207,6 @@ d;return d.Ya},{Reference:U,Query:X,Database:Pg,enableLogging:Sb,INTERNAL:Z,TEST
           })();
           //# sourceMappingURL=database.js.map
           
-
-
-/***/ }),
-/* 170 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*! @license Firebase v4.1.3
-Build: rev-1234895
-Terms: https://firebase.google.com/terms/ */
-
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _app = __webpack_require__(32);
-
-var _app2 = _interopRequireDefault(_app);
-
-__webpack_require__(168);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Import instance of FirebaseApp from ./app
-var Storage, XMLHttpRequest;
-
-__webpack_require__(169);
-__webpack_require__(178);
-var AsyncStorage;
-
-__webpack_require__(171);
-// Export the single instance of firebase
-exports.default = _app2.default;
-module.exports = exports['default'];
-//# sourceMappingURL=firebase-browser.js.map
 
 
 /***/ }),
@@ -23723,10 +23741,10 @@ var CSSProperty = __webpack_require__(104);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactInstrumentation = __webpack_require__(12);
 
-var camelizeStyleName = __webpack_require__(153);
+var camelizeStyleName = __webpack_require__(154);
 var dangerousStyleValue = __webpack_require__(268);
-var hyphenateStyleName = __webpack_require__(160);
-var memoizeStringOnly = __webpack_require__(163);
+var hyphenateStyleName = __webpack_require__(161);
+var memoizeStringOnly = __webpack_require__(164);
 var warning = __webpack_require__(2);
 
 var processStyleName = memoizeStringOnly(function (styleName) {
@@ -24290,7 +24308,7 @@ var _prodInvariant = __webpack_require__(3);
 var DOMLazyTree = __webpack_require__(26);
 var ExecutionEnvironment = __webpack_require__(7);
 
-var createNodesFromMarkup = __webpack_require__(156);
+var createNodesFromMarkup = __webpack_require__(157);
 var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(1);
 
@@ -28597,7 +28615,7 @@ var ReactHostOperationHistoryHook = __webpack_require__(241);
 var ReactComponentTreeHook = __webpack_require__(9);
 var ExecutionEnvironment = __webpack_require__(7);
 
-var performanceNow = __webpack_require__(165);
+var performanceNow = __webpack_require__(166);
 var warning = __webpack_require__(2);
 
 var hooks = [];
@@ -29192,7 +29210,7 @@ var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(14);
 
 var getEventTarget = __webpack_require__(74);
-var getUnboundedScrollPosition = __webpack_require__(158);
+var getUnboundedScrollPosition = __webpack_require__(159);
 
 /**
  * Find the deepest React component completely containing the root of the

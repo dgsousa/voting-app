@@ -1,45 +1,46 @@
 import database from "../database";
-import v4 from "uuid/v4";
 
 
-export const vote = (poll, option, user) => (dispatch, getState) => {
-	if(getState()["polls"][poll]["voted"][user]) return;
-	return dispatch({
-		type: "VOTE",
-		poll,
-		option,
-		user
-	})
+
+export const vote = (id, option) => (dispatch, getState) => {
+	const {polls, user} = getState();
+	if(polls[id]["voted"][user]) return;
+	database.ref("polls/" + id).transaction(state => ({
+		...state,
+		["voted"]: {...state["voted"], [user]: true},
+		["options"]: {
+			...state.options,
+			[option]: (state.options[option] + 1) || 1
+		}
+	}));
 }
 
 	
 
-export const addPoll = (poll, optionsArray, creator) => (dispatch, getState) => {
-	if(getState()["polls"][poll] || !poll || !optionsArray.length) return;
+export const addPoll = (topic, optionsArray, creator) => (dispatch, getState) => {
+	if(checkForPoll(getState(), topic) || !topic || !optionsArray.length) return;
 	const options = transformOptions(optionsArray);
-	const key = database.ref("polls/").push({
-		[poll]: {
-			id: v4(),
-			creator: creator,
-			voted: {},
-			options: options
-		}
-	}).key;
-
-	console.log(database.ref("polls/").child(poll));
+	database.ref("polls/").push({
+		topic,
+		creator,
+		voted: {},
+		options
+	});
 }
 
 
-export const deletePoll = (poll) =>  (dispatch) => {
-	database.ref("polls/" + poll).push("hello");
-
-	// return dispatch({
-	// 	type: "DELETE_POLL",
-	// 	poll
-	// })
+export const deletePoll = (id) => (dispatch) => {
+	database.ref("polls/" + id + "/").remove();
 }
+
+
 
 //helper functions
+const checkForPoll = (state, topic) => {
+	return Object.keys(state.polls).some(id => {
+		return state.polls[id] && state.polls[id].topic === topic;
+	})
+}
 
 const transformOptions = (optionsArray) => {
 	const options = {};
