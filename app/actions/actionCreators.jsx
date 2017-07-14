@@ -29,9 +29,9 @@ export const addPoll = (topic, optionsArray, creator) => (dispatch, getState) =>
 }
 
 
-export const deletePoll = (id) => (dispatch) => {
+export const deletePoll = (id) => (dispatch) =>
 	database.ref("polls/" + id + "/").remove();
-}
+
 
 
 

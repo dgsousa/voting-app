@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
+import {NavLink} from "react-router-dom";
+
+
 import {vote} from "../actions/actionCreators.jsx";
 
 
@@ -13,7 +16,7 @@ class DropDown extends Component {
 	}
 
 	componentWillMount() {
-		this.setState({option: this.props.options[0]});
+		this.setState({option: this.props.options && this.props.options[0]});
 	}
 
 	handleChange(e) {
@@ -21,8 +24,9 @@ class DropDown extends Component {
 	}
 
 	render() {
-		const {id, options, user, vote} = this.props;
+		const {id, options, user, vote, tweet} = this.props;
 		const {option} = this.state;
+		
 		return (
 			<div>
 				<select onChange={this.handleChange.bind(this)}>
@@ -33,6 +37,9 @@ class DropDown extends Component {
 				<label>Custom: </label>
 				<input type="text" onChange={this.handleChange.bind(this)}/>
 				<button type="submit" onClick={(e) => vote(id, option)}>Submit</button>
+				<NavLink 
+						to={"https:\/\/twitter.com/intent/tweet?text=" + tweet}  
+						target="_blank">Tweet</NavLink>
 			</div>
 		)
 	}
@@ -41,7 +48,8 @@ class DropDown extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
 	id: ownProps.match.params.id,
-	options: Object.keys(state.polls[ownProps.match.params.id].options)
+	options: state.polls[ownProps.match.params.id] && Object.keys(state.polls[ownProps.match.params.id].options) || [],
+	tweet: state.polls[ownProps.match.params.id] && encodeURIComponent(`${state.polls[ownProps.match.params.id].topic} | localhost:3000/polls/${ownProps.match.params.id}`)
 })
 
 

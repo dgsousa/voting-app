@@ -8,13 +8,13 @@
 }
 
 .navbar {
-    width: 20%;
+    width: 30%;
     margin-left: 70%;
+    justify-content: flex-end;
     display: flex;
-    justify-content: space-around;
 }
 
-.navbar a {
+.navbar a, .login {
 	width: 25%;
     text-align: center;
     border: 3px solid black;
@@ -22,6 +22,9 @@
     padding-top: 20px;
     text-decoration: none;
     color: black;
+    background-color: white;
+    font-size: 16px;
+    outline: none;
 }
 
 
@@ -34,3 +37,4 @@
     padding: 5%;
     text-align: center;
 }
+

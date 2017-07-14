@@ -12,7 +12,7 @@ let Chart = ({options}) =>
 
 
 const mapStateToProps = (state, ownProps) => ({
-	options: ownProps.poll.options
+	options: ownProps.poll && ownProps.poll.options || []
 })
 
 

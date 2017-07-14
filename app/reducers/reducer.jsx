@@ -64,12 +64,32 @@ const optionsReducer = (state = {}, action) => {
 	return state;
 }
 
+const userReducer = (state = null, action) => {
+	switch(action.type) {
+	case "SET_USER":
+		return action.user;
+	case "SIGN_OUT":
+		return null;
+	}
+
+	return state;
+}
+
+const loadingReducer = (state = false, action) => {
+	switch(action.type) {
+	case "LOADING":
+		return action.loading;
+	}
+	return state;
+}
 
 
 const appReducer = combineReducers({
 	polls: pollsReducer,
-	user: (state = "alpha") => state
+	user: userReducer,
+	loading: loadingReducer
 });
+
 
 const pollReducer = combineReducers({
 	topic: topicReducer,

@@ -1,27 +1,41 @@
 import React from "react";
-import { BrowserRouter as Router, Route, IndexRoute} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {connect} from "react-redux";
+
+
+
+
+//components
 import Home from "./Home.jsx";
-import MyPolls from "./MyPolls.jsx";
-import NewPollContainer from "./NewPoll.jsx";
 import Header from "./Header.jsx";
 import Poll from "./Poll.jsx";
-import Login from "./Login.jsx";
+import EnsureLoggedInContainer from "./EnsureLoggedInContainer.jsx";
 
 
 
-const App = () => 
+
+let App = ({loading}) =>
+	
+	loading ? <div>{"...loading"}</div> :
+
 	<Router>
 		<div>
 			<Route component={Header}/>
-			<div className="main">
+			<Switch>
 				<Route exact path="/" component={Home}/>
 				<Route path="/polls/:id" component={Poll}/>
-				<Route path="/mypolls" component={MyPolls}/>
-				<Route path="/newpoll" component={NewPollContainer}/>
-				<Route path="/login" component={Login}>
-			</div>
+				<Route component={EnsureLoggedInContainer} />
+			</Switch>
 		</div>
 	</Router>
+
+
+const mapStateToProps = (state) => ({
+	loading: state.loading
+})
+
+
+App = connect(mapStateToProps)(App);
 
 
 export default App;
