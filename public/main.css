@@ -1,31 +1,338 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);* {
+  box-sizing: border-box; }
+
+body {
+  background: #EFEFEF;
+  font-family: "Oswald";
+  font-size: 24px;
+  margin: 0;
+  position: relative; }
+
+#app {
+  width: 100%;
+  margin: auto; }
+
+a {
+  text-decoration: none;
+  text-align: center; }
+
+button {
+  font-size: 20px;
+  font-family: "Oswald";
+  height: 50px;
+  border: 3px solid black;
+  color: white; }
+  button:focus {
+    outline: none; }
+
 .header {
   width: 100%;
   height: 50px;
-  text-align: right; }
-
-.navbar {
-  width: 30%;
-  margin-left: 70%;
-  justify-content: flex-end;
-  display: flex; }
-
-.navbar a, .login {
-  width: 25%;
-  text-align: center;
-  border: 3px solid black;
-  border-radius: 5px;
-  padding-top: 20px;
-  text-decoration: none;
-  color: black;
-  background-color: white;
-  font-size: 16px;
-  outline: none; }
+  margin: auto;
+  background: #262626;
+  display: flex;
+  padding: 0 10%; }
+  @media (max-width: 767px) {
+    .header {
+      height: initial;
+      flex-direction: column-reverse;
+      padding: 0; } }
+  .header .navbar {
+    flex: 1 0;
+    height: 90%;
+    display: flex;
+    justify-content: flex-end; }
+    @media (max-width: 767px) {
+      .header .navbar {
+        flex-direction: column; } }
+    .header .navbar .active {
+      background: #e24329; }
+    .header .navbar a, .header .navbar .login {
+      width: 80px;
+      border: 3px solid #262626;
+      border-radius: 5px;
+      color: black;
+      outline: none;
+      background: #fafafa;
+      height: 100%; }
+      @media (max-width: 767px) {
+        .header .navbar a, .header .navbar .login {
+          width: 100%;
+          border: none;
+          border-radius: 0px;
+          background: #262626;
+          color: #fafafa;
+          height: 50px;
+          border-bottom: 2px solid #fafafa; }
+          .header .navbar a:hover, .header .navbar .login:hover {
+            background: #fafafa;
+            color: #262626; } }
+      .header .navbar a span, .header .navbar .login span {
+        font-size: 20px;
+        font-family: "Oswald"; }
+        @media (max-width: 767px) {
+          .header .navbar a span, .header .navbar .login span {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            vertical-align: middle; } }
+  .header .twitter {
+    flex: 1 0;
+    height: 100%; }
+    @media (max-width: 767px) {
+      .header .twitter {
+        width: 100%;
+        height: 50px;
+        background: #EFEFEF; } }
+    .header .twitter a {
+      display: flex;
+      justify-content: space-around;
+      width: 100px;
+      height: 90%;
+      background: #2e9ef2;
+      display: block;
+      border: 3px solid #262626;
+      border-radius: 5px; }
+      @media (max-width: 767px) {
+        .header .twitter a {
+          width: 100%;
+          background: #262626;
+          border-radius: 0px;
+          border: none; }
+          .header .twitter a:hover {
+            background: #2e9ef2; } }
+      .header .twitter a img {
+        margin: 0;
+        height: 30px;
+        width: 30px;
+        vertical-align: middle; }
 
 .main {
-  width: 60%;
-  border: 3px solid black;
-  margin: 5% auto;
-  height: 400px;
-  border-radius: 10px;
-  padding: 5%;
+  width: 100%;
+  margin: auto;
+  padding-top: 5%;
   text-align: center; }
+  .main .poll-list {
+    width: 40%;
+    margin: auto; }
+    @media (max-width: 1100px) {
+      .main .poll-list {
+        width: 50%; } }
+    @media (max-width: 800px) {
+      .main .poll-list {
+        width: 60%; } }
+    @media (max-width: 600px) {
+      .main .poll-list {
+        width: 70%; } }
+    @media (max-width: 400px) {
+      .main .poll-list {
+        width: 80%; } }
+    .main .poll-list h1 {
+      width: 100%;
+      background: #432958;
+      border: 3px solid black;
+      color: white;
+      min-height: 90px;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+      text-transform: uppercase; }
+    .main .poll-list ul {
+      list-style-type: none;
+      padding: 0; }
+      .main .poll-list ul li {
+        height: 70px;
+        width: 100%;
+        border: 3px solid black;
+        background: #fd713e;
+        margin: 10px auto;
+        cursor: pointer;
+        position: relative;
+        padding-top: 5px; }
+        .main .poll-list ul li:hover {
+          background: #e26537; }
+        .main .poll-list ul li a, .main .poll-list ul li span {
+          color: white;
+          vertical-align: middle;
+          text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+        .main .poll-list ul li .delete {
+          background: transparent;
+          border: none;
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 14px;
+          height: 20px;
+          cursor: pointer; }
+  .main .new-poll {
+    background: #fd713e;
+    width: 30%;
+    margin: auto;
+    border: 3px solid black; }
+    @media (max-width: 1300px) {
+      .main .new-poll {
+        width: 40%; } }
+    @media (max-width: 1100px) {
+      .main .new-poll {
+        width: 50%; } }
+    @media (max-width: 800px) {
+      .main .new-poll {
+        width: 60%; } }
+    @media (max-width: 600px) {
+      .main .new-poll {
+        width: 70%; } }
+    @media (max-width: 500px) {
+      .main .new-poll {
+        width: 80%; } }
+    .main .new-poll h1 {
+      color: white;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+      text-transform: uppercase; }
+    .main .new-poll input {
+      border: 3px solid black;
+      width: 80%;
+      height: 50px;
+      padding: 20px;
+      font-size: 20px;
+      margin-top: 20px; }
+      .main .new-poll input:focus {
+        outline: none; }
+    .main .new-poll .submit-new-poll {
+      height: 150px;
+      padding-top: 10%; }
+      .main .new-poll .submit-new-poll .new-poll-button {
+        width: 80%;
+        background: #432958; }
+        .main .new-poll .submit-new-poll .new-poll-button a {
+          color: white;
+          width: 100%;
+          display: block; }
+  .main .poll {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column; }
+    @media (max-width: 1100px) {
+      .main .poll {
+        width: 80%; } }
+    @media (max-width: 900px) {
+      .main .poll {
+        width: 90%; } }
+    @media (max-width: 800px) {
+      .main .poll {
+        width: 95%; } }
+    @media (max-width: 767px) {
+      .main .poll {
+        width: 70%; } }
+    @media (max-width: 700px) {
+      .main .poll {
+        width: 80%; } }
+    @media (max-width: 610px) {
+      .main .poll {
+        width: 90%; } }
+    @media (max-width: 550px) {
+      .main .poll {
+        width: 95%; } }
+    .main .poll .poll-title {
+      flex: 1 0;
+      border: 3px solid black;
+      border-bottom: 0px;
+      background: #fd713e;
+      color: white;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+      text-transform: uppercase; }
+    .main .poll .panel {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 100%;
+      height: 450px;
+      flex: 5 0; }
+      @media (max-width: 767px) {
+        .main .poll .panel {
+          flex-direction: column-reverse;
+          height: 900px; } }
+      .main .poll .panel .ballot {
+        flex: 1 0;
+        height: 450px;
+        width: 100%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 0px 20px 0px 20px;
+        background: #432958;
+        color: white;
+        border: 3px solid black;
+        position: relative; }
+        .main .poll .panel .ballot .ballot-header {
+          flex: 1 0; }
+          .main .poll .panel .ballot .ballot-header h2 {
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000; }
+        .main .poll .panel .ballot form {
+          display: flex;
+          flex-direction: column;
+          flex: 2 0;
+          padding: 20px;
+          width: 100%;
+          background: white;
+          color: black;
+          border: 3px solid black; }
+          .main .poll .panel .ballot form ul {
+            text-align: left;
+            overflow: scroll;
+            list-style-type: none;
+            padding-left: 0;
+            border: 2px solid grey;
+            flex: 3 0; }
+            .main .poll .panel .ballot form ul li {
+              margin-top: -3px; }
+              .main .poll .panel .ballot form ul li button {
+                border: none;
+                background: white;
+                width: 100%;
+                height: 100%;
+                text-align: left;
+                padding-left: 5%;
+                color: black; }
+                .main .poll .panel .ballot form ul li button:hover {
+                  background: #c1e1f2; }
+                .main .poll .panel .ballot form ul li button:focus {
+                  background: #9ccee8; }
+          .main .poll .panel .ballot form input[type="text"] {
+            width: 100%;
+            font-size: 20px;
+            padding-left: 20px;
+            font-family: "Oswald";
+            border: 2px solid grey;
+            flex: 1 0; }
+            .main .poll .panel .ballot form input[type="text"]:focus {
+              outline: none; }
+        .main .poll .panel .ballot .ballot-button {
+          flex: 1 0;
+          display: flex;
+          flex-direction: column; }
+          .main .poll .panel .ballot .ballot-button .vote-button {
+            background: #fd713e; }
+        .main .poll .panel .ballot span {
+          color: red;
+          font-size: 16px;
+          position: absolute;
+          bottom: 3%;
+          left: 20%; }
+      .main .poll .panel .chart {
+        flex: 2 0;
+        background: #0c0701;
+        border: 3px solid black;
+        border-left: none; }
+        @media (max-width: 767px) {
+          .main .poll .panel .chart {
+            border: 3px solid black;
+            border-bottom: none;
+            flex: 1 0; } }
+
+.arc path {
+  stroke: #EFEFEF; }
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  margin: 20% auto; }

@@ -1,12 +1,12 @@
 import React from "react";
-import {redirectToLogin, signOut} from "../authorization";
+import {redirectToLogin, signOut} from "../src/authorization";
 import {connect} from "react-redux";
 
 let Login = ({user, signOut}) =>
 	<button 
 		className="login" 
 		onClick={ user ? signOut : redirectToLogin }>
-		{user ? "Logout" : "Login"}
+		<span>{user ? "Logout" : "Login"}</span>
 	</button>
 
 

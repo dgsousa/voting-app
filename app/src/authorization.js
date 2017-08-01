@@ -24,7 +24,6 @@ export const getCredentials = (store) => {
 			loading: false 
 		});
 	}).catch(error => {
-		console.log(error);
 		console.log("error", error.message);
 	})
 	

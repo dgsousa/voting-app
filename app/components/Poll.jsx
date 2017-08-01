@@ -1,13 +1,18 @@
 import React from "react";
 import {connect} from "react-redux";
-import Chart from "./Chart.jsx";
-import DropDownContainer from "./DropDown.jsx";
 
+
+import Chart from "./Chart.jsx";
+import Ballot from "./Ballot.jsx";
+import Title from "./Title.jsx";
 
 let Poll = ({poll}) => 
-	<div>
-		<DropDownContainer poll={poll}/>
-		<Chart poll={poll}/>
+	<div className="poll">
+		<Title poll={poll}/>
+		<div className="panel">
+			<Ballot poll={poll}/>
+			<Chart poll={poll}/>
+		</div>
 	</div>
 
 

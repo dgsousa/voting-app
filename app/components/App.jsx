@@ -1,9 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
-
-
-
+import Loader from "halogen/RingLoader";
 
 //components
 import Home from "./Home.jsx";
@@ -16,16 +14,22 @@ import EnsureLoggedInContainer from "./EnsureLoggedInContainer.jsx";
 
 let App = ({loading}) =>
 	
-	loading ? <div>{"...loading"}</div> :
+	loading ? 
+
+	<div className="spinner">
+		<Loader size="100px" color="#432958" margin="10px"/>
+	</div> :
 
 	<Router>
 		<div>
 			<Route component={Header}/>
-			<Switch>
-				<Route exact path="/" component={Home}/>
-				<Route path="/polls/:id" component={Poll}/>
-				<Route component={EnsureLoggedInContainer} />
-			</Switch>
+			<div className="main">
+				<Switch>
+					<Route exact path="/" component={Home}/>
+					<Route path="/polls/:id" component={Poll}/>
+					<Route component={EnsureLoggedInContainer} />
+				</Switch>
+			</div>
 		</div>
 	</Router>
 

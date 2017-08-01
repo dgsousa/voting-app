@@ -1,28 +1,31 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
-import Login from "./Login.jsx";
+
+import Twitter from "./Twitter.jsx";
+import NavBar from "./NavBar.jsx";
 
 
 
-let Header = ({user}) => 
+let Header = ({user, tweet}) => 
 	<div className="header">
-		<div className="navbar">
-			<NavLink to="/">Home</NavLink>
-			{ user && <NavLink to="/mypolls">My Polls</NavLink> }
-			{ user && <NavLink to="/newpoll">New Poll</NavLink> }
-			<Login />
-		</div>
+		<Twitter tweet={tweet}/>
+		<NavBar user={user}/>
 	</div>
 
 
-const mapStateToProps = (state) => ({
-	user: state.user
-})
+const mapStateToProps = (state, ownProps) => {
+	const id = ownProps.location.pathname.slice(7);
+	const tweet = id.length && state.polls[id] && encodeURIComponent(`${state.polls[id].topic} | localhost:3000/polls/${id}`);
+	return {
+		user: state.user,
+		tweet: tweet
+	}
+}
 
 
-Header = connect(mapStateToProps)(Header); 
+Header = withRouter(connect(mapStateToProps)(Header)); 
 
 
 export default Header;

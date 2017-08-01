@@ -7,9 +7,10 @@ import App from "./components/App.jsx";
 
 import v4 from "uuid/v4";
 import appReducer from "./reducers/reducer.jsx";
-import addEventListeners from "./event_listeners";
-import {getCredentials} from "./authorization";
+import addEventListeners from "./src/event_listeners";
+import {getCredentials} from "./src/authorization";
 import "./scss/styles.scss";
+
 
 
 const createStoreWithMiddleWare = compose(
