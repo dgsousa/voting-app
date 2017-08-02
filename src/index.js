@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const server = require("http").createServer(app);
+const favicon = require("serve-favicon");
 
 const config = require("./config");
 const socketServer = require("./socket");
