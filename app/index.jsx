@@ -11,6 +11,8 @@ import addEventListeners from "./src/event_listeners";
 import {getCredentials} from "./src/authorization";
 import "./scss/styles.scss";
 
+console.log("newest");
+
 const socket = io(`${location.protocol}//${location.hostname}:8090`);
 
 socket.on("data", data => {

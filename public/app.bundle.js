@@ -17256,12 +17256,6 @@ const signOut = () => (dispatch) => {
 
 
 
-
-
-//offer multiple login methods
-//persist login?
-//
-
 /***/ }),
 /* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -33285,6 +33279,8 @@ __webpack_require__(229);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+console.log("newest");
+
 var socket = (0, _socket2.default)(location.protocol + "//" + location.hostname + ":8090");
 
 socket.on("data", function (data) {
@@ -33292,14 +33288,6 @@ socket.on("data", function (data) {
 	(0, _event_listeners2.default)(_store2.default, database);
 	(0, _authorization.getCredentials)(_store2.default, database);
 });
-
-// axios.get("/config")
-// 	.then(response => createDatabase(response.data))
-// 	.then(response => {
-// 		addEventListeners(store, response);
-// 		getCredentials(store, response);
-// 	});
-
 
 _reactDom2.default.render(_react2.default.createElement(
 	_reactRedux.Provider,
