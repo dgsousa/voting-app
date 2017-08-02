@@ -33279,9 +33279,7 @@ __webpack_require__(229);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log("newest");
-
-var socket = (0, _socket2.default)(location.protocol + "//" + location.hostname + ":8090");
+var socket = (0, _socket2.default)(location.protocol + "//" + location.hostname + ":8080");
 
 socket.on("data", function (data) {
 	var database = (0, _database2.default)(data);

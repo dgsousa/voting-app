@@ -1,8 +1,8 @@
-const Server = require("socket.io");
+const socketIO = require("socket.io");
 
 
-const socketServer = data => {
-	const io = new Server().attach(8090);
+const socketServer = (server, data) => {
+	const io = socketIO(server);
 
 	io.on("connection", socket => {
 		socket.emit("data", data)
