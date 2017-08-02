@@ -1,6 +1,6 @@
 
 
-console.log(process.env)
+
 
 const config = {
 	apiKey: process.env.API_KEY,
