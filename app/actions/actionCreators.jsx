@@ -2,7 +2,7 @@ import database from "../src/database";
 
 
 
-export const vote = (id, option) => (dispatch, getState) => {
+export const vote = (id, option) => (dispatch, getState, database) => {
 	const {polls, user} = getState();
 	if((polls[id]["voted"][user] && !(user == null)) || !option) {
 		return;
@@ -18,7 +18,7 @@ export const vote = (id, option) => (dispatch, getState) => {
 
 }
 
-export const addPoll = (topic, optionsArray, creator) => (dispatch, getState) => {
+export const addPoll = (topic, optionsArray, creator) => (dispatch, getState, database) => {
 	if(checkForPoll(getState(), topic) || !topic || !optionsArray.length) return;
 	const options = transformOptions(optionsArray);
 	database.ref("polls/").push({
@@ -30,7 +30,7 @@ export const addPoll = (topic, optionsArray, creator) => (dispatch, getState) =>
 }
 
 
-export const deletePoll = (id) => (dispatch) => {
+export const deletePoll = (id) => (dispatch, getState, database) => {
 	const confirmation = confirm("Are you sure you want to delete this poll?");
 	if(confirmation) database.ref("polls/" + id + "/").remove();
 }

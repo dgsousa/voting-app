@@ -11548,7 +11548,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var vote = exports.vote = function vote(id, option) {
-	return function (dispatch, getState) {
+	return function (dispatch, getState, database) {
 		var _getState = getState(),
 		    polls = _getState.polls,
 		    user = _getState.user;
@@ -11556,7 +11556,7 @@ var vote = exports.vote = function vote(id, option) {
 		if (polls[id]["voted"][user] && !(user == null) || !option) {
 			return;
 		}
-		_database2.default.ref("polls/" + id).transaction(function (state) {
+		database.ref("polls/" + id).transaction(function (state) {
 			var _extends4;
 
 			return _extends({}, state, (_extends4 = {}, _defineProperty(_extends4, "voted", _extends({}, state["voted"], _defineProperty({}, user, true))), _defineProperty(_extends4, "options", _extends({}, state.options, _defineProperty({}, option, state.options[option] + 1 || 1))), _extends4));
@@ -11565,10 +11565,10 @@ var vote = exports.vote = function vote(id, option) {
 };
 
 var addPoll = exports.addPoll = function addPoll(topic, optionsArray, creator) {
-	return function (dispatch, getState) {
+	return function (dispatch, getState, database) {
 		if (checkForPoll(getState(), topic) || !topic || !optionsArray.length) return;
 		var options = transformOptions(optionsArray);
-		_database2.default.ref("polls/").push({
+		database.ref("polls/").push({
 			topic: topic,
 			creator: creator,
 			voted: {},
@@ -11578,9 +11578,9 @@ var addPoll = exports.addPoll = function addPoll(topic, optionsArray, creator) {
 };
 
 var deletePoll = exports.deletePoll = function deletePoll(id) {
-	return function (dispatch) {
+	return function (dispatch, getState, database) {
 		var confirmation = confirm("Are you sure you want to delete this poll?");
-		if (confirmation) _database2.default.ref("polls/" + id + "/").remove();
+		if (confirmation) database.ref("polls/" + id + "/").remove();
 	};
 };
 
@@ -31079,14 +31079,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-const createStoreWithMiddleWare = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["compose"])(
-	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a), 
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"]);
 
-const store = createStoreWithMiddleWare(__WEBPACK_IMPORTED_MODULE_2__reducers_reducer_jsx___default.a);
+const createStoreWithMiddleWareAndDatabase = (database) =>
+	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["compose"])(
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a.withExtraArgument(database)), 
+		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	)(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPACK_IMPORTED_MODULE_2__reducers_reducer_jsx___default.a);
 
-/* harmony default export */ __webpack_exports__["default"] = (store);
+
+/* harmony default export */ __webpack_exports__["default"] = (createStoreWithMiddleWareAndDatabase);
+
+
 
 /***/ }),
 /* 227 */
@@ -33283,15 +33286,16 @@ var socket = (0, _socket2.default)();
 
 socket.on("data", function (data) {
 	var database = (0, _database2.default)(data);
-	(0, _event_listeners2.default)(_store2.default, database);
-	(0, _authorization.getCredentials)(_store2.default, database);
-});
+	var store = (0, _store2.default)(database);
+	(0, _event_listeners2.default)(store, database);
+	(0, _authorization.getCredentials)(store, database);
 
-_reactDom2.default.render(_react2.default.createElement(
-	_reactRedux.Provider,
-	{ store: _store2.default },
-	_react2.default.createElement(_App2.default, null)
-), document.getElementById("app"));
+	_reactDom2.default.render(_react2.default.createElement(
+		_reactRedux.Provider,
+		{ store: store },
+		_react2.default.createElement(_App2.default, null)
+	), document.getElementById("app"));
+});
 
 /***/ }),
 /* 264 */
