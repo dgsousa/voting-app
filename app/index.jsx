@@ -11,11 +11,12 @@ import addEventListeners from "./src/event_listeners";
 import {getCredentials} from "./src/authorization";
 import "./scss/styles.scss";
 
-console.log(process.env);
+
 
 const socket = io();
 
 socket.on("data", data => {
+	console.log(data);
 	const database = createDatabase(data);
 	const store = createStoreWithMiddleWareAndDatabase(database);
 	addEventListeners(store, database);

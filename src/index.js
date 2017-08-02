@@ -19,6 +19,8 @@ app.use("/", (req, res) => {
 
 server.listen(port);
 
+console.log(config);
+
 
 socketServer(server, config);
 
