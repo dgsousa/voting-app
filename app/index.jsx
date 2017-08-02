@@ -11,6 +11,7 @@ import addEventListeners from "./src/event_listeners";
 import {getCredentials} from "./src/authorization";
 import "./scss/styles.scss";
 
+console.log(process.env);
 
 const socket = io();
 

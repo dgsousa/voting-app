@@ -33240,7 +33240,7 @@ exports.default = Twitter;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(process) {
 
 var _react = __webpack_require__(6);
 
@@ -33282,6 +33282,8 @@ __webpack_require__(229);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+console.log(process.env);
+
 var socket = (0, _socket2.default)();
 
 socket.on("data", function (data) {
@@ -33296,6 +33298,7 @@ socket.on("data", function (data) {
 		_react2.default.createElement(_App2.default, null)
 	), document.getElementById("app"));
 });
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 264 */
