@@ -1,27 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
-import thunk from "redux-thunk";
-import App from "./components/App.jsx";
+import axios from "axios";
+import io from "socket.io-client";
 
-import v4 from "uuid/v4";
-import appReducer from "./reducers/reducer.jsx";
+import store from "./src/store.js";
+import App from "./components/App.jsx";
+import createDatabase from "./src/database.js";
 import addEventListeners from "./src/event_listeners";
 import {getCredentials} from "./src/authorization";
 import "./scss/styles.scss";
 
+const socket = io(`${location.protocol}//${location.hostname}:8090`);
 
+socket.on("data", data => {
+	const database = createDatabase(data);
+	addEventListeners(store, database);
+	getCredentials(store, database);
+})
 
-const createStoreWithMiddleWare = compose(
-	applyMiddleware(thunk), 
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-)(createStore);
-
-const store = createStoreWithMiddleWare(appReducer);
-
-addEventListeners(store);
-getCredentials(store);
 
 ReactDOM.render(
 	<Provider store={store}>

@@ -38,10 +38,3 @@ export const signOut = () => (dispatch) => {
 		.catch(error => console.log(error.message));
 }
 
-
-
-
-
-//offer multiple login methods
-//persist login?
-//

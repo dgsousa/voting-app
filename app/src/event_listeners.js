@@ -1,8 +1,6 @@
 
-import database from "./database";
 
-
-const addedPollsEventListener = (store) => 
+const addedPollsEventListener = (store, database) => 
 	database.ref("/polls/").on("child_added", snap => {
 		const val = snap.val();
 		const key = snap.key;
@@ -17,7 +15,7 @@ const addedPollsEventListener = (store) =>
 	})
 
 
-const deletePollEventListener = (store) =>
+const deletePollEventListener = (store, database) =>
 	database.ref("/polls/").on("child_removed", snap => {
 		const id = snap.key;
 		store.dispatch({
@@ -27,7 +25,7 @@ const deletePollEventListener = (store) =>
 	})
 
 
-const voteEventListener = (store) =>
+const voteEventListener = (store, database) =>
 	database.ref("/polls/").on("child_changed", snap => {
 		const id = snap.key;
 		const {options, voted} = snap.val();
@@ -41,10 +39,10 @@ const voteEventListener = (store) =>
 
 
 
-const addEventListeners = (store) => {
-	addedPollsEventListener(store);
-	deletePollEventListener(store);
-	voteEventListener(store);
+const addEventListeners = (store, database) => {
+	addedPollsEventListener(store, database);
+	deletePollEventListener(store, database);
+	voteEventListener(store, database);
 }
 
 export default addEventListeners;
