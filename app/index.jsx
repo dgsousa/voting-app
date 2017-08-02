@@ -16,7 +16,6 @@ import "./scss/styles.scss";
 const socket = io();
 
 socket.on("data", data => {
-	console.log(data);
 	const database = createDatabase(data);
 	const store = createStoreWithMiddleWareAndDatabase(database);
 	addEventListeners(store, database);

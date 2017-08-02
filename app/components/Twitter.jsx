@@ -7,7 +7,7 @@ const Twitter = ({tweet}) =>
 			<Link 
 				to={"https:\/\/twitter.com/intent/tweet?text=" + tweet}  
 				target="_blank">
-				<img src="/static/twitter.svg" width="30px"/>
+				<img src="/static/images/twitter.svg" width="30px"/>
 			</Link>
 		}
 	</div>

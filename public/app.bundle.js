@@ -33228,7 +33228,7 @@ var Twitter = function Twitter(_ref) {
 			{
 				to: "https:\/\/twitter.com/intent/tweet?text=" + tweet,
 				target: "_blank" },
-			_react2.default.createElement("img", { src: "/static/twitter.svg", width: "30px" })
+			_react2.default.createElement("img", { src: "/static/images/twitter.svg", width: "30px" })
 		)
 	);
 };
@@ -33285,7 +33285,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var socket = (0, _socket2.default)();
 
 socket.on("data", function (data) {
-	console.log(data);
 	var database = (0, _database2.default)(data);
 	var store = (0, _store2.default)(database);
 	(0, _event_listeners2.default)(store, database);
