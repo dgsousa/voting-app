@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const server = require("http").Server(app);
+const server = require("http").createServer(app);
 
 const config = require("./config");
 const socketServer = require("./socket");
@@ -17,10 +17,8 @@ app.use("/", (req, res) => {
 		res.sendFile(index);
 	})
 
-app.listen(port);
+server.listen(port);
 
-
-server.listen(8080);
 
 socketServer(server, config);
 

@@ -13,7 +13,7 @@ import "./scss/styles.scss";
 
 
 
-const socket = io(`${location.protocol}//${location.hostname}:8080`);
+const socket = io();
 
 socket.on("data", data => {
 	const database = createDatabase(data);
