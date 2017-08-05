@@ -4,7 +4,7 @@ const path = require("path");
 const server = require("http").createServer(app);
 const favicon = require("serve-favicon");
 
-const config = require("./config");
+const database = require("./database");
 const socketServer = require("./socket");
 
 const port = process.env.PORT || 3000;
@@ -23,7 +23,7 @@ server.listen(port);
 
 
 
-socketServer(server, config);
+socketServer(server, database);
 
 
 

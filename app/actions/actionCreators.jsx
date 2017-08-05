@@ -1,6 +1,3 @@
-import database from "../src/database";
-
-
 
 export const vote = (id, option) => (dispatch, getState, database) => {
 	const {polls, user} = getState();
