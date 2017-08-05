@@ -15,10 +15,10 @@ import "./scss/styles.scss";
 const socket = io();
 
 socket.on("data", database => {
-	console.log(database);
-	const store = createStoreWithMiddleWareAndDatabase(database);
-	addEventListeners(store, database);
-	getCredentials(store, database);
+	
+	//const store = createStoreWithMiddleWareAndDatabase(database);
+	//addEventListeners(store, database);
+	//getCredentials(store, database);
 
 	ReactDOM.render(
 		<Provider store={store}>
