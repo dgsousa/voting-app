@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 
-import {vote} from "../actions/actionCreators.jsx";
+import {vote} from "../../actions/actionCreators.jsx";
+import VoteOptions from "./VoteOptions.jsx";
 
 
 class Ballot extends Component {
@@ -13,7 +14,9 @@ class Ballot extends Component {
 		this.state = {
 			option: "",
 			hasVoted: false
-		} 
+		}
+		this.handleChange = this.handleChange.bind(this);
+		this.castVote = this.castVote.bind(this);
 	}
 
 	hasVoted(voted) {
@@ -27,7 +30,16 @@ class Ballot extends Component {
 	handleChange(e) {
 		e.preventDefault();
 		this.setState({option: e.target.value});
+
 	}
+
+	castVote(e) {
+		const {voted, id} = this.props;
+		const {option} = this.state;
+		this.props.vote(id, option);
+		this.refs.input.value = "";
+		this.hasVoted(voted);
+	} 
 
 	render() {
 		const {id, options, user, vote, voted} = this.props;
@@ -37,36 +49,11 @@ class Ballot extends Component {
 			<div className="ballot">
 				<div className="ballot-header"><h2>Cast a Vote</h2></div>
 				<form>
-					
-					<ul>
-						{options.map((option, index) => 
-							<li key={index}>
-								<button 
-								  	value={option}
-								  	onClick={this.handleChange.bind(this)}>
-								 {option}
-								 </button>
-								 
-							</li>
-						)}
-					</ul>
-					
-					<input 
-						type="text"
-						placeholder={"Custom"} 
-						onChange={this.handleChange.bind(this)}
-						ref="input"/>
-						
+					<VoteOptions options={options} onChange={this.handleChange}/>
+					<input type="text" placeholder={"Custom"} onChange={this.handleChange} ref="input"/>	
 				</form>
 				<div className="ballot-button">
-					<button 
-						className="vote-button" 
-						type="submit" 
-						onClick={(e) => {
-							vote(id, option);
-							this.refs.input.value = "";
-							this.hasVoted(voted)
-						}}>
+					<button className="vote-button" type="submit" onClick={this.castVote}>
 						SUBMIT
 					</button>
 				</div>

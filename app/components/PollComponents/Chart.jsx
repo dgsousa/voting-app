@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {findDOMNode} from "react-dom";
 
-import DonutChart from "../d3_components/DonutChart.js";
+import DonutChart from "../../d3_components/DonutChart.js";
 
 
 class Chart extends Component {

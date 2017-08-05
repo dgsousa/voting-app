@@ -4,9 +4,9 @@ import {connect} from "react-redux";
 import Loader from "halogen/RingLoader";
 
 //components
-import Home from "./Home.jsx";
-import Header from "./Header.jsx";
-import Poll from "./Poll.jsx";
+import Home from "./HomeComponents/Home.jsx";
+import Header from "./HeaderComponents/Header.jsx";
+import Poll from "./PollComponents/Poll.jsx";
 import EnsureLoggedInContainer from "./EnsureLoggedInContainer.jsx";
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {redirectToLogin, signOut} from "../src/authorization";
+import {redirectToLogin, signOut} from "../../src/authorization";
 import {connect} from "react-redux";
 
 let Login = ({user, signOut}) =>
