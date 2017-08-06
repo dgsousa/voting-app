@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const server = require("http").createServer(app);
 const favicon = require("serve-favicon");
+const firebase = require("firebase");
 
 const socketServer = require("./socket_server.js");
 const database = require("./database");
@@ -21,9 +22,6 @@ app.use("/", (req, res) => {
 server.listen(port);
 
 const socket = socketServer(server, database);
-
-
-
 
 
 

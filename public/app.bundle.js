@@ -17189,6 +17189,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_firebase__);
 
 
+const config = {
+	apiKey: "AIzaSyCxwT2udbQFddsw-_zxoum0lJlJ1VR_rAg",
+	authDomain: "voting-app-9a2b1.firebaseapp.com",
+	databaseURL: "https://voting-app-9a2b1.firebaseio.com",
+	projectId: "voting-app-9a2b1",
+	messagingSenderId: "517098115982",
+	storageBucket: "voting-app-9a2b1.appspot.com"
+}
+
+__WEBPACK_IMPORTED_MODULE_0_firebase__["initializeApp"](config);
+
+
 
 const redirectToLogin = () => {
 	const provider = new __WEBPACK_IMPORTED_MODULE_0_firebase__["auth"].TwitterAuthProvider();
