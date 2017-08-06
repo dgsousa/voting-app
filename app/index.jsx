@@ -19,7 +19,7 @@ socket.on("data", data => {
 	const database = createDatabase(data);
 	const store = createStoreWithMiddleWareAndDatabase(database);
 	addEventListeners(store, database);
-	getCredentials(store, database);
+	getCredentials(store);
 
 	ReactDOM.render(
 		<Provider store={store}>

@@ -33403,7 +33403,7 @@ socket.on("data", function (data) {
 	var database = (0, _database2.default)(data);
 	var store = (0, _store2.default)(database);
 	(0, _event_listeners2.default)(store, database);
-	(0, _authorization.getCredentials)(store, database);
+	(0, _authorization.getCredentials)(store);
 
 	_reactDom2.default.render(_react2.default.createElement(
 		_reactRedux.Provider,
