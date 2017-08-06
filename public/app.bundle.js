@@ -17199,10 +17199,6 @@ const redirectToLogin = () => {
 
 const getCredentials = (store, config) => {
 	const dispatch = store.dispatch;
-	// dispatch({ 
-	// 	type: "LOADING", 
-	// 	loading: true 
-	// });
 	__WEBPACK_IMPORTED_MODULE_0_firebase__["initializeApp"](config);
 	__WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().getRedirectResult().then(result => {
 		if(result.credential) {

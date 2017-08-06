@@ -8,10 +8,6 @@ export const redirectToLogin = () => {
 
 export const getCredentials = (store, config) => {
 	const dispatch = store.dispatch;
-	// dispatch({ 
-	// 	type: "LOADING", 
-	// 	loading: true 
-	// });
 	firebase.initializeApp(config);
 	firebase.auth().getRedirectResult().then(result => {
 		if(result.credential) {
