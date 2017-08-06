@@ -11535,13 +11535,8 @@ module.exports = defaults;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var vote = exports.vote = function vote(id, option) {
-	return function (dispatch, getState, database) {
+	return function (dispatch, getState, socket) {
 		var _getState = getState(),
 		    polls = _getState.polls,
 		    user = _getState.user;
@@ -11549,31 +11544,22 @@ var vote = exports.vote = function vote(id, option) {
 		if (polls[id]["voted"][user] && !(user == null) || !option) {
 			return;
 		}
-		database.ref("polls/" + id).transaction(function (state) {
-			var _extends4;
-
-			return _extends({}, state, (_extends4 = {}, _defineProperty(_extends4, "voted", _extends({}, state["voted"], _defineProperty({}, user, true))), _defineProperty(_extends4, "options", _extends({}, state.options, _defineProperty({}, option, state.options[option] + 1 || 1))), _extends4));
-		});
+		socket.emit("vote", { id: id, option: option });
 	};
 };
 
 var addPoll = exports.addPoll = function addPoll(topic, optionsArray, creator) {
-	return function (dispatch, getState, database) {
+	return function (dispatch, getState, socket) {
 		if (checkForPoll(getState(), topic) || !topic || !optionsArray.length) return;
 		var options = transformOptions(optionsArray);
-		database.ref("polls/").push({
-			topic: topic,
-			creator: creator,
-			voted: {},
-			options: options
-		});
+		socket.emit("addPoll", { topic: topic, options: options, creator: creator });
 	};
 };
 
 var deletePoll = exports.deletePoll = function deletePoll(id) {
-	return function (dispatch, getState, database) {
+	return function (dispatch, getState, socket) {
 		var confirmation = confirm("Are you sure you want to delete this poll?");
-		if (confirmation) database.ref("polls/" + id + "/").remove();
+		if (confirmation) socket.emit("deletePoll", id);
 	};
 };
 
@@ -30935,9 +30921,8 @@ module.exports = yeast;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-
-const addedPollsEventListener = (store, database) => 
-	database.ref("/polls/").on("child_added", snap => {
+const addedPollsEventListener = (store, socket) => 
+	socket.on("ADD_POLL", snap => {
 		const val = snap.val();
 		const key = snap.key;
 		store.dispatch({
@@ -30951,8 +30936,8 @@ const addedPollsEventListener = (store, database) =>
 	})
 
 
-const deletePollEventListener = (store, database) =>
-	database.ref("/polls/").on("child_removed", snap => {
+const deletePollEventListener = (store, socket) =>
+	socket.on("DELETE_POLL", snap => {
 		const id = snap.key;
 		store.dispatch({
 			type: "DELETE_POLL",
@@ -30961,8 +30946,8 @@ const deletePollEventListener = (store, database) =>
 	})
 
 
-const voteEventListener = (store, database) =>
-	database.ref("/polls/").on("child_changed", snap => {
+const voteEventListener = (store, socket) =>
+	socket.on("VOTE", snap => {
 		const id = snap.key;
 		const {options, voted} = snap.val();
 		store.dispatch({
@@ -30975,16 +30960,13 @@ const voteEventListener = (store, database) =>
 
 
 
-const addEventListeners = (store, database) => {
-	addedPollsEventListener(store, database);
-	deletePollEventListener(store, database);
-	voteEventListener(store, database);
+const addEventListeners = (store, socket) => {
+	addedPollsEventListener(store, socket);
+	deletePollEventListener(store, socket);
+	voteEventListener(store, socket);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (addEventListeners);
-
-
-
 
 
 /***/ }),
@@ -31003,14 +30985,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-const createStoreWithMiddleWareAndDatabase = (database) =>
+const createStoreWithMiddleWareAndSocket = (socket) =>
 	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["compose"])(
-		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a.withExtraArgument(database)), 
+		__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_redux__["applyMiddleware"])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk___default.a.withExtraArgument(socket)), 
 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 	)(__WEBPACK_IMPORTED_MODULE_0_redux__["createStore"])(__WEBPACK_IMPORTED_MODULE_2__reducers_reducer_jsx___default.a);
 
 
-/* harmony default export */ __webpack_exports__["default"] = (createStoreWithMiddleWareAndDatabase);
+/* harmony default export */ __webpack_exports__["default"] = (createStoreWithMiddleWareAndSocket);
 
 
 
@@ -33318,18 +33300,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var socket = (0, _socket2.default)();
 
-socket.on("data", function (database) {
-	console.log(database);
-	var store = (0, _store2.default)(database);
-	(0, _event_listeners2.default)(store, database);
-	(0, _authorization.getCredentials)(store, database);
+var store = (0, _store2.default)(socket);
+(0, _event_listeners2.default)(store, socket);
+//getCredentials(store);
 
-	_reactDom2.default.render(_react2.default.createElement(
-		_reactRedux.Provider,
-		{ store: store },
-		_react2.default.createElement(_App2.default, null)
-	), document.getElementById("app"));
-});
+_reactDom2.default.render(_react2.default.createElement(
+	_reactRedux.Provider,
+	{ store: store },
+	_react2.default.createElement(_App2.default, null)
+), document.getElementById("app"));
 
 /***/ }),
 /* 265 */

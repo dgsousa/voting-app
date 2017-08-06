@@ -14,9 +14,9 @@ import "./scss/styles.scss";
 
 const socket = io();
 
-const store = createStoreWithMiddleWareAndDatabase(socket);
-	
-	//getCredentials(store, database);
+const store = createStoreWithMiddleWareAndSocket(socket);
+addEventListeners(store, socket);
+//getCredentials(store);
 
 ReactDOM.render(
 	<Provider store={store}>

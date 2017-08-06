@@ -5,7 +5,7 @@ import appReducer from "../reducers/reducer.jsx";
 
 const createStoreWithMiddleWareAndSocket = (socket) =>
 	compose(
-		applyMiddleware(thunk.withExtraArgument(database)), 
+		applyMiddleware(thunk.withExtraArgument(socket)), 
 		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 	)(createStore)(appReducer);
 
