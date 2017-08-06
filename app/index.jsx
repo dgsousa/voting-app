@@ -6,7 +6,6 @@ import io from "socket.io-client";
 
 import createStoreWithMiddleWareAndSocket from "./src/store.js";
 import App from "./components/App.jsx";
-import addEventListeners from "./src/event_listeners";
 import {getCredentials} from "./src/authorization";
 import "./scss/styles.scss";
 
@@ -14,9 +13,11 @@ import "./scss/styles.scss";
 
 const socket = io();
 
+
 const store = createStoreWithMiddleWareAndSocket(socket);
-addEventListeners(store, socket);
-//getCredentials(store);
+
+socket.on("data", store.dispatch);
+getCredentials(store);
 
 ReactDOM.render(
 	<Provider store={store}>

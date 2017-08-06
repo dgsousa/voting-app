@@ -3,13 +3,14 @@ const event_listeners = require("./event_listeners");
 
 const vote = (database, data) => {
 	const {id, option} = data;
-	database.ref("polls/" + id).transaction(state => 
+	database.ref("polls/" + id).transaction(state => {
+		console.log("state", state);
 		Object.assign(
 			state,
 			{voted: Object.assign(state.voted, {[user]: true})},
 			{options: Object.assign(state.options, {[option]: (state.options[option] + 1) || 1})}
 		)
-	)
+	})
 }
 
 const addPoll = (database, data) => {
@@ -33,12 +34,13 @@ const socketServer = (server, database) => {
 	const {addedPollsEventListener, deletePollEventListener, voteEventListener} = event_listeners;
 	const io = socketIO.listen(server);
 
-	addedPollsEventListener(io, database);
-	deletePollEventListener(io, database);
-	voteEventListener(io, database);
-
 	io.on("connection", socket => {
-		socket.on("vote", data => vote(database, data));
+		addedPollsEventListener(io, database);
+		deletePollEventListener(io, database);
+		voteEventListener(io, database);
+		socket.on("vote", data => {
+			vote(database, data)
+		});
 		socket.on("addPoll", data => addPoll(database, data));
 		socket.on("deletePoll", data => deletePoll(database, data));
 	})
