@@ -18,10 +18,9 @@ const voteEventListener = (socket, database) =>
 	})
 
 
-const addEventListeners = (socket, database) => {
-	addedPollsEventListener(socket, database);
-	deletePollEventListener(socket, database);
-	voteEventListener(socket, database);
-}
 
-module.exports = addEventListeners;
+module.exports = {
+	addedPollsEventListener,
+	deletePollEventListener,
+	voteEventListener
+};

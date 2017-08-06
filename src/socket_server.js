@@ -1,5 +1,5 @@
 const socketIO = require("socket.io");
-
+const event_listeners = require("./event_listeners");
 
 const vote = (database, data) => {
 	const {id, option} = data;
@@ -30,7 +30,12 @@ const deletePoll = (database, data) => {
 
 
 const socketServer = (server, database) => {
+	const {addedPollsEventListener, deletePollEventListener, voteEventListener} = event_listeners;
 	const io = socketIO.listen(server);
+
+	addedPollsEventListener(io, database);
+	deletePollEventListener(io, database);
+	voteEventListener(io, database);
 
 	io.on("connection", socket => {
 		socket.on("vote", data => vote(database, data));
