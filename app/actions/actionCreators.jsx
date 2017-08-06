@@ -4,9 +4,8 @@ export const vote = (id, option) => (dispatch, getState, socket) => {
 	if(polls[id]["voted"][user] || !option) {
 		return;
 	}
-	socket.emit("vote", { id, option });
-	
-
+	console.log(user);
+	socket.emit("vote", { id, option, user });
 }
 
 export const addPoll = (topic, optionsArray, creator) => (dispatch, getState, socket) => {

@@ -1,48 +1,20 @@
 const socketIO = require("socket.io");
-const event_listeners = require("./event_listeners");
-
-const vote = (database, data) => {
-	const {id, option} = data;
-	database.ref("polls/" + id).transaction(state => {
-		console.log("state", state);
-		Object.assign(
-			state,
-			{voted: Object.assign(state.voted, {[user]: true})},
-			{options: Object.assign(state.options, {[option]: (state.options[option] + 1) || 1})}
-		)
-	})
-}
-
-const addPoll = (database, data) => {
-	const {topic, options, creator} = data;
-	database.ref("polls/").push({
-		topic,
-		creator,
-		voted: {},
-		options
-	});
-}
-
-const deletePoll = (database, data) => {
-	const {id} = data;
-	database.ref("polls/" + id + "/").remove();
-}
-
+const database_listeners = require("./database_listeners");
+const action_listeners = require("./action_listeners");
 
 
 const socketServer = (server, database) => {
-	const {addedPollsEventListener, deletePollEventListener, voteEventListener} = event_listeners;
+	const {addedPollsDatabaseListener, deletePollDatabaseListener, voteDatabaseListener} = database_listeners;
+	const {voteActionListener, addPollActionListener, deletePollActionListener} = action_listeners;
 	const io = socketIO.listen(server);
 
 	io.on("connection", socket => {
-		addedPollsEventListener(io, database);
-		deletePollEventListener(io, database);
-		voteEventListener(io, database);
-		socket.on("vote", data => {
-			vote(database, data)
-		});
-		socket.on("addPoll", data => addPoll(database, data));
-		socket.on("deletePoll", data => deletePoll(database, data));
+		addedPollsDatabaseListener(io, database);
+		deletePollDatabaseListener(io, database);
+		voteDatabaseListener(io, database);
+		socket.on("vote", data => voteActionListener(database, data));
+		socket.on("addPoll", data => addPollActionListener(database, data));
+		socket.on("deletePoll", data => deletePollActionListener(database, data));
 	})
 
 	return io;

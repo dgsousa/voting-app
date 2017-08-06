@@ -1,6 +1,6 @@
 
 
-const addedPollsEventListener = (socket, database) => 
+const addedPollsDatabaseListener = (socket, database) => 
 	database.ref("/polls/").on("child_added", snap => {
 		const val = snap.val();
 		const key = snap.key;
@@ -15,7 +15,7 @@ const addedPollsEventListener = (socket, database) =>
 	})
 
 
-const deletePollEventListener = (socket, database) =>
+const deletePollDatabaseListener = (socket, database) =>
 	database.ref("/polls/").on("child_removed", snap => {
 		const id = snap.key;
 		socket.emit("data", {
@@ -25,7 +25,7 @@ const deletePollEventListener = (socket, database) =>
 	})
 
 
-const voteEventListener = (socket, database) =>
+const voteDatabaseListener = (socket, database) =>
 	database.ref("/polls/").on("child_changed", snap => {
 		const id = snap.key;
 		const {options, voted} = snap.val();
@@ -40,7 +40,7 @@ const voteEventListener = (socket, database) =>
 
 
 module.exports = {
-	addedPollsEventListener,
-	deletePollEventListener,
-	voteEventListener
+	addedPollsDatabaseListener,
+	deletePollDatabaseListener,
+	voteDatabaseListener
 };

@@ -11544,7 +11544,8 @@ var vote = exports.vote = function vote(id, option) {
 		if (polls[id]["voted"][user] || !option) {
 			return;
 		}
-		socket.emit("vote", { id: id, option: option });
+		console.log(user);
+		socket.emit("vote", { id: id, option: option, user: user });
 	};
 };
 
