@@ -4,10 +4,9 @@ const path = require("path");
 const server = require("http").createServer(app);
 const favicon = require("serve-favicon");
 
-const database = require("./database");
-const socketIO = require("socket.io");
+const socketServer = require("./socket_server.js");
 const addEventListeners = require("./addEventListeners");
-
+const database = require("./database");
 const port = process.env.PORT || 3000;
 const index = path.join(__dirname + "/templates/index.html");
 
@@ -22,9 +21,9 @@ app.use("/", (req, res) => {
 
 server.listen(port);
 
+socketServer(server, database);
 
 
-const io = socketIO.listen(server);
 
 addEventListeners(io);
 
