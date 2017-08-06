@@ -11541,10 +11541,9 @@ var vote = exports.vote = function vote(id, option) {
 		    polls = _getState.polls,
 		    user = _getState.user;
 
-		if (polls[id]["voted"][user] || !option) {
+		if (polls[id]["voted"][user] && !!user || !option) {
 			return;
 		}
-		console.log(user);
 		socket.emit("vote", { id: id, option: option, user: user });
 	};
 };
@@ -11560,7 +11559,7 @@ var addPoll = exports.addPoll = function addPoll(topic, optionsArray, creator) {
 var deletePoll = exports.deletePoll = function deletePoll(id) {
 	return function (dispatch, getState, socket) {
 		var confirmation = confirm("Are you sure you want to delete this poll?");
-		if (confirmation) socket.emit("deletePoll", id);
+		if (confirmation) socket.emit("deletePoll", { id: id });
 	};
 };
 
@@ -17190,18 +17189,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_firebase__);
 
 
-const config = {
-	apiKey: "AIzaSyCxwT2udbQFddsw-_zxoum0lJlJ1VR_rAg",
-	authDomain: "voting-app-9a2b1.firebaseapp.com",
-	databaseURL: "https://voting-app-9a2b1.firebaseio.com",
-	projectId: "voting-app-9a2b1",
-	messagingSenderId: "517098115982",
-	storageBucket: "voting-app-9a2b1.appspot.com"
-}
-
-__WEBPACK_IMPORTED_MODULE_0_firebase__["initializeApp"](config);
-
-
 
 const redirectToLogin = () => {
 	const provider = new __WEBPACK_IMPORTED_MODULE_0_firebase__["auth"].TwitterAuthProvider();
@@ -17210,12 +17197,13 @@ const redirectToLogin = () => {
 /* harmony export (immutable) */ __webpack_exports__["redirectToLogin"] = redirectToLogin;
 
 
-const getCredentials = (store) => {
+const getCredentials = (store, config) => {
 	const dispatch = store.dispatch;
-	dispatch({ 
-		type: "LOADING", 
-		loading: true 
-	});
+	// dispatch({ 
+	// 	type: "LOADING", 
+	// 	loading: true 
+	// });
+	__WEBPACK_IMPORTED_MODULE_0_firebase__["initializeApp"](config);
 	__WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().getRedirectResult().then(result => {
 		if(result.credential) {
 			dispatch({
@@ -33253,11 +33241,11 @@ __webpack_require__(226);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var socket = (0, _socket2.default)();
-
 var store = (0, _store2.default)(socket);
-
-socket.on("data", store.dispatch);
-(0, _authorization.getCredentials)(store);
+socket.on("config", function (config) {
+	(0, _authorization.getCredentials)(store, config);
+	socket.on("data", store.dispatch);
+});
 
 _reactDom2.default.render(_react2.default.createElement(
 	_reactRedux.Provider,
@@ -33358,7 +33346,7 @@ var userReducer = function userReducer() {
 };
 
 var loadingReducer = function loadingReducer() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 	var action = arguments[1];
 
 	switch (action.type) {

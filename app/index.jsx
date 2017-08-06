@@ -12,12 +12,12 @@ import "./scss/styles.scss";
 
 
 const socket = io();
-
-
 const store = createStoreWithMiddleWareAndSocket(socket);
+socket.on("config", config => {
+	getCredentials(store, config);
+	socket.on("data", store.dispatch);
+})
 
-socket.on("data", store.dispatch);
-getCredentials(store);
 
 ReactDOM.render(
 	<Provider store={store}>

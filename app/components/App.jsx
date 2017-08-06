@@ -10,8 +10,6 @@ import Poll from "./PollComponents/Poll.jsx";
 import EnsureLoggedInContainer from "./EnsureLoggedInContainer.jsx";
 
 
-
-
 let App = ({loading}) =>
 	
 	loading ? 

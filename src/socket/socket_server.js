@@ -1,6 +1,7 @@
 const socketIO = require("socket.io");
-const database_listeners = require("./database_listeners");
-const action_listeners = require("./action_listeners");
+const database_listeners = require("../listeners/database_listeners");
+const action_listeners = require("../listeners/action_listeners");
+const config = require("../database/client_key");
 
 
 const socketServer = (server, database) => {
@@ -9,6 +10,7 @@ const socketServer = (server, database) => {
 	const io = socketIO.listen(server);
 
 	io.on("connection", socket => {
+		socket.emit("config", config);
 		addedPollsDatabaseListener(io, database);
 		deletePollDatabaseListener(io, database);
 		voteDatabaseListener(io, database);

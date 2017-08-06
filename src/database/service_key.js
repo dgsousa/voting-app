@@ -1,4 +1,4 @@
-{
+module.exports = {
   "type": "service_account",
   "project_id": "voting-app-9a2b1",
   "private_key_id": "4620d74309b3c80719c68aa4aae495de3f979291",

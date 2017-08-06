@@ -1,10 +1,9 @@
 
 export const vote = (id, option) => (dispatch, getState, socket) => {
 	const {polls, user} = getState();
-	if(polls[id]["voted"][user] || !option) {
+	if((polls[id]["voted"][user] && !!user)|| !option) {
 		return;
 	}
-	console.log(user);
 	socket.emit("vote", { id, option, user });
 }
 
@@ -17,7 +16,7 @@ export const addPoll = (topic, optionsArray, creator) => (dispatch, getState, so
 
 export const deletePoll = (id) => (dispatch, getState, socket) => {
 	const confirmation = confirm("Are you sure you want to delete this poll?");
-	if(confirmation) socket.emit("deletePoll", id);
+	if(confirmation) socket.emit("deletePoll", {id});
 }
 
 

@@ -75,7 +75,7 @@ const userReducer = (state = null, action) => {
 	return state;
 }
 
-const loadingReducer = (state = false, action) => {
+const loadingReducer = (state = true, action) => {
 	switch(action.type) {
 	case "LOADING":
 		return action.loading;

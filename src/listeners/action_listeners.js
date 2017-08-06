@@ -5,11 +5,7 @@ const voteActionListener = (database, data) => {
 	database.ref("polls/" + id).transaction(state => {
 		const voted = Object.assign(state.voted || {}, {[user]: true})
 		const options = Object.assign(state.options, {[option]: (state.options[option] + 1) || 1})
-		Object.assign(
-			state,
-			voted,
-			options
-		)
+		return Object.assign(state, {voted}, {options});
 	})
 }
 
