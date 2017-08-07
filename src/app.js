@@ -1,7 +1,7 @@
 "use strict";
 
 require("babel-core/register")({
-	"presets": ["es2015"]
+	"presets": ["es2015", "stage-0"]
 })
 const express = require("express");
 const app = express();

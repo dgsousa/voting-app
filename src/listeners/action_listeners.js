@@ -3,9 +3,14 @@
 const voteActionListener = (database, data) => {
 	const {id, option, user} = data;
 	database.ref("polls/" + id).transaction(state => {
-		const voted = Object.assign(state.voted || {}, {[user]: true})
-		const options = Object.assign(state.options, {[option]: (state.options[option] + 1) || 1})
-		return Object.assign(state, {voted}, {options});
+		...state,
+		voted: {...state.voted, [user]: true},
+		options: {...state.options, [option]: (state.options[option] + 1) || 1},
+
+
+		// const voted = Object.assign(state.voted || {}, {[user]: true})
+		// const options = Object.assign(state.options, {[option]: (state.options[option] + 1) || 1})
+		// return Object.assign(state, {voted}, {options});
 	})
 }
 
