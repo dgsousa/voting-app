@@ -1,5 +1,4 @@
 import React from "react";
-import {NavLink, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 
@@ -25,7 +24,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 
-Header = withRouter(connect(mapStateToProps)(Header)); 
+Header = connect(mapStateToProps)(Header); 
 
 
 export default Header;

@@ -1,3 +1,8 @@
+"use strict";
+
+require("babel-core/register")({
+	"presets": ["es2015"]
+})
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -8,15 +13,17 @@ const firebase = require("firebase");
 const socketServer = require("./socket/socket_server.js");
 const database = require("./database");
 const port = process.env.PORT || 3000;
-const index = path.join(__dirname + "/templates/index.html");
+const index = path.join(__dirname + "/views/index.ejs");
 
 
 
 app.use("/static", express.static("public"));
 app.use(favicon('./public/images/vote.png'));
 
+app.set("view engine", "ejs");
+
 app.use("/", (req, res) => {
-	res.sendFile(index);
+	res.render(index, {});
 })
 
 server.listen(port);
