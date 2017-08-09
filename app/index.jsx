@@ -15,6 +15,8 @@ import "./scss/styles.scss";
 
 const socket = io();
 
+
+
 socket.on("data", data => {
 	const database = createDatabase(data);
 	const store = createStoreWithMiddleWareAndDatabase(database);
@@ -29,8 +31,6 @@ socket.on("data", data => {
 	);
 
 })
-
-
 
 
 

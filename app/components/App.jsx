@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+
 import {connect} from "react-redux";
 import Loader from "halogen/RingLoader";
 
@@ -8,6 +9,7 @@ import Home from "./HomeComponents/Home.jsx";
 import Header from "./HeaderComponents/Header.jsx";
 import Poll from "./PollComponents/Poll.jsx";
 import EnsureLoggedInContainer from "./EnsureLoggedInContainer.jsx";
+
 
 
 

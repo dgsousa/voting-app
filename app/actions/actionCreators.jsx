@@ -4,7 +4,7 @@ import database from "../src/database";
 
 export const vote = (id, option) => (dispatch, getState, database) => {
 	const {polls, user} = getState();
-	if((polls[id]["voted"][user] && !(user == null)) || !option) {
+	if(( user in polls[id]["voted"] && !(user == null)) || !option) {
 		return;
 	}
 	database.ref("polls/" + id).transaction(state => ({

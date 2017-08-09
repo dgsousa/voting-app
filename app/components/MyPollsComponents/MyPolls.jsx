@@ -6,6 +6,8 @@ import Topic from "./Topic.jsx";
 
 
 
+
+
 let MyPolls = ({polls, user}) => {
 
 	const topics = Object.keys(polls).map(id => {
