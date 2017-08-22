@@ -14,9 +14,9 @@ const socketServer = (server, database) => {
 		addedPollsDatabaseListener(io, database);
 		deletePollDatabaseListener(io, database);
 		voteDatabaseListener(io, database);
-		socket.on("vote", data => voteActionListener(database, data));
-		socket.on("addPoll", data => addPollActionListener(database, data));
-		socket.on("deletePoll", data => deletePollActionListener(database, data));
+		socket.on("vote", voteActionListener(database));
+		socket.on("addPoll", addPollActionListener(database));
+		socket.on("deletePoll", deletePollActionListener(database));
 	})
 
 	return io;

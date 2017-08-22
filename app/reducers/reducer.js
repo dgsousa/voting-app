@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+ import {combineReducers} from "redux";
 
 
 
@@ -30,7 +30,7 @@ const topicReducer = (state = null, action) => {
 	return state;
 }
 
-
+s
 
 const creatorReducer = (state = null, action) => {
 	switch(action.type) {
@@ -79,6 +79,16 @@ const loadingReducer = (state = true, action) => {
 	switch(action.type) {
 	case "LOADING":
 		return action.loading;
+	}
+	return state;
+}
+
+const destinationReducer = (state = {}, action) => {
+	switch(action.type) {
+	case "SET_DESTINATION":
+		return {
+			...state
+		}
 	}
 	return state;
 }

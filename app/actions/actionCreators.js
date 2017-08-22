@@ -1,9 +1,7 @@
-
+ 
 export const vote = (id, option) => (dispatch, getState, socket) => {
 	const {polls, user} = getState();
-	if((polls[id]["voted"][user] && !!user)|| !option) {
-		return;
-	}
+	if((polls[id]["voted"][user] && !!user)|| !option) return;
 	socket.emit("vote", { id, option, user });
 }
 

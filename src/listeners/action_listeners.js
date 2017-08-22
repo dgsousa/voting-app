@@ -1,6 +1,6 @@
 
 
-const voteActionListener = (database, data) => {
+const voteActionListener = database => data => {
 	const {id, option, user} = data;
 	database.ref("polls/" + id).transaction(state => ({
 		...state,
@@ -9,7 +9,7 @@ const voteActionListener = (database, data) => {
 	}))
 }
 
-const addPollActionListener = (database, data) => {
+const addPollActionListener = database => data => {
 	const {topic, options, creator} = data;
 	database.ref("polls/").push({
 		topic,
@@ -19,7 +19,7 @@ const addPollActionListener = (database, data) => {
 	});
 }
 
-const deletePollActionListener = (database, data) => {
+const deletePollActionListener = database => data => {
 	const {id} = data;
 	database.ref("polls/" + id + "/").remove();
 }

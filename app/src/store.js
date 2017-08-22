@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware, compose} from "redux";
 import thunk from "redux-thunk";
-import appReducer from "../reducers/reducer.jsx";
+import appReducer from "../reducers/reducer.js";
 
 
 const createStoreWithMiddleWareAndSocket = (socket) =>

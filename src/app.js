@@ -1,8 +1,8 @@
 "use strict";
 
-require("babel-core/register")({
-	"presets": ["es2015", "stage-0"]
-})
+// require("babel-core/register")({
+// 	["presets"] : ["es2015"]
+// });
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -24,7 +24,7 @@ app.set("view engine", "ejs");
 
 app.use("/", (req, res) => {
 	res.render(index, {});
-})
+});
 
 server.listen(port);
 

@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 
-import {vote} from "../../actions/actionCreators.jsx";
+import {vote} from "../../actions/actionCreators.js";
 import VoteOptions from "./VoteOptions.jsx";
 
 

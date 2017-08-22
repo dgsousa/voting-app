@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {addPoll} from "../../actions/actionCreators.jsx";
+import {addPoll} from "../../actions/actionCreators.js";
 
 
 import SubmitNewPoll from "./SubmitNewPoll.jsx";
