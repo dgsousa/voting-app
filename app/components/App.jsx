@@ -32,9 +32,7 @@ let App = ({loading}) =>
 	</Router>
 
 
-const mapStateToProps = (state) => ({
-	loading: state.loading
-})
+const mapStateToProps = (state) => ({loading: state.loading});
 
 
 App = connect(mapStateToProps)(App);

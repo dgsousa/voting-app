@@ -15,9 +15,8 @@ let EnsureLoggedIn = ({user}) => user ?
  	: <Redirect to="/"/>
 
 
-const mapStateToProps = (state) => ({
-	user: state.user
-})
+const mapStateToProps = (state) => {user: state.user};
+
 
 const EnsureLoggedInContainer = connect(mapStateToProps)(EnsureLoggedIn);
 

@@ -1,3 +1,5 @@
+"use strict";
+
 const admin = require("firebase-admin");
 
 const serviceAccount = require("./service_key");

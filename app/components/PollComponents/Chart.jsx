@@ -53,7 +53,7 @@ class Chart extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
 	options: ownProps.poll && ownProps.poll.options || {}
-})
+});
 
 
 

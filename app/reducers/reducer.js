@@ -30,7 +30,7 @@ const topicReducer = (state = null, action) => {
 	return state;
 }
 
-s
+
 
 const creatorReducer = (state = null, action) => {
 	switch(action.type) {

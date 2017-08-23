@@ -68,11 +68,7 @@ const mapStateToProps = (state, ownProps) => {
 	const id = ownProps.match.params.id;
 	const options = state.polls[id] && Object.keys(state.polls[id].options) || [];
 	const voted = state.polls[id] && Object.keys(state.polls[id].voted).indexOf(state.user) > -1;
-	return {
-		id: id,
-		options: options,
-		voted: voted
-	}
+	return { id, options, voted };
 }
 
 

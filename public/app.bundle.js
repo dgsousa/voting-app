@@ -11387,9 +11387,7 @@ const deletePoll = id => (dispatch, getState, socket) => {
 
 
 //helper functions
-const checkForPoll = (state, topic) => Object.keys(state.polls).some(id => {
-	return state.polls[id] && state.polls[id].topic === topic;
-});
+const checkForPoll = (state, topic) => Object.keys(state.polls).some(id => state.polls[id] && state.polls[id].topic === topic);
 
 const transformOptions = optionsArray => {
 	const options = {};
@@ -30893,9 +30891,7 @@ let App = ({ loading }) => loading ? __WEBPACK_IMPORTED_MODULE_0_react___default
 	)
 );
 
-const mapStateToProps = state => ({
-	loading: state.loading
-});
+const mapStateToProps = state => ({ loading: state.loading });
 
 App = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps)(App);
 
@@ -31054,9 +31050,9 @@ let EnsureLoggedIn = ({ user }) => user ? __WEBPACK_IMPORTED_MODULE_0_react___de
 	__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { path: "/newpoll", component: __WEBPACK_IMPORTED_MODULE_4__NewPollComponents_NewPoll_jsx__["a" /* default */] })
 ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Redirect */], { to: "/" });
 
-const mapStateToProps = state => ({
-	user: state.user
-});
+const mapStateToProps = state => {
+	user: state.user;
+};
 
 const EnsureLoggedInContainer = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps)(EnsureLoggedIn);
 
@@ -31563,11 +31559,7 @@ const mapStateToProps = (state, ownProps) => {
 	const id = ownProps.match.params.id;
 	const options = state.polls[id] && Object.keys(state.polls[id].options) || [];
 	const voted = state.polls[id] && Object.keys(state.polls[id].voted).indexOf(state.user) > -1;
-	return {
-		id: id,
-		options: options,
-		voted: voted
-	};
+	return { id, options, voted };
 };
 
 Ballot = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["f" /* withRouter */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps, { vote: __WEBPACK_IMPORTED_MODULE_3__actions_actionCreators_js__["c" /* vote */] })(Ballot));
@@ -31858,7 +31850,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const socket = __WEBPACK_IMPORTED_MODULE_4_socket_io_client___default()();
 const store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__src_store_js__["a" /* default */])(socket);
 socket.on("config", config => {
-
 	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__src_authorization__["a" /* getCredentials */])(store, config);
 	socket.on("data", store.dispatch);
 });

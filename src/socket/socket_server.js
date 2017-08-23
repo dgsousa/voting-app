@@ -1,3 +1,5 @@
+"use strict";
+
 const socketIO = require("socket.io");
 const database_listeners = require("../listeners/database_listeners");
 const action_listeners = require("../listeners/action_listeners");

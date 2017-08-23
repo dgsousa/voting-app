@@ -1,4 +1,4 @@
-
+"use strict";
 
 const addedPollsDatabaseListener = (socket, database) => 
 	database.ref("/polls/").on("child_added", snap => {

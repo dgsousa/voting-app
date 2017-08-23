@@ -1,4 +1,4 @@
-
+"use strict";
 
 const voteActionListener = database => data => {
 	const {id, option, user} = data;

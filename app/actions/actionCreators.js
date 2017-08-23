@@ -20,9 +20,7 @@ export const deletePoll = (id) => (dispatch, getState, socket) => {
 
 //helper functions
 const checkForPoll = (state, topic) => 
-	Object.keys(state.polls).some(id => {
-		return state.polls[id] && state.polls[id].topic === topic;
-	})
+	Object.keys(state.polls).some(id => state.polls[id] && state.polls[id].topic === topic);
 
 
 const transformOptions = (optionsArray) => {
