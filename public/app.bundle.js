@@ -11553,9 +11553,7 @@ var vote = exports.vote = function vote(id, option) {
 		    polls = _getState.polls,
 		    user = _getState.user;
 
-		if (user in polls[id]["voted"] && !(user == null) || !option) {
-			return;
-		}
+		if (user in polls[id]["voted"] && !(user == null) || !option) return;
 		database.ref("polls/" + id).transaction(function (state) {
 			var _extends4;
 
@@ -11580,7 +11578,7 @@ var addPoll = exports.addPoll = function addPoll(topic, optionsArray, creator) {
 var deletePoll = exports.deletePoll = function deletePoll(id) {
 	return function (dispatch, getState, database) {
 		var confirmation = confirm("Are you sure you want to delete this poll?");
-		if (confirmation) database.ref("polls/" + id + "/").remove();
+		confirmation && database.ref("polls/" + id + "/").remove();
 	};
 };
 

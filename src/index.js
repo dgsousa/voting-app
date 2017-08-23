@@ -15,9 +15,7 @@ const index = path.join(__dirname + "/templates/index.html");
 app.use("/static", express.static("public"));
 app.use(favicon('./public/images/vote.png'));
 
-app.use("/", (req, res) => {
-	res.sendFile(index);
-})
+app.use("/", (req, res) => res.sendFile(index));
 
 server.listen(port);
 
