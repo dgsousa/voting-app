@@ -16,7 +16,7 @@ module.exports = {
 				test: /\.jsx$/,
 				exclude: "/node_modules/",
 				loader: "babel-loader" 
-			},l.fuc
+			},
 			{
 				test: /\.(css|scss)$/,
 				loader: ExtractTextPlugin.extract({

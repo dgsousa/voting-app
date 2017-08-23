@@ -2,39 +2,28 @@ import * as firebase from "firebase";
 
 
 export const redirectToLogin = () => {
-	const provider = new firebase.auth.TwitterAuthProvider();
+	const provider = new firebase.auth.GithubAuthProvider();
 	firebase.auth().signInWithRedirect(provider);
 }
 
-export const getCredentials = (store) => {
+export const getCredentials = async (store) => {
 	const dispatch = store.dispatch;
-	dispatch({ 
-		type: "LOADING", 
-		loading: true 
-	});
-	firebase.auth().getRedirectResult().then(result => {
-		if(result.credential) {
-			dispatch({
-				type: "SET_USER",
-				user: result.user.displayName
-			});
-		}
-		dispatch({ 
-			type: "LOADING", 
-			loading: false 
-		});
-	}).catch(error => {
-		console.log("error", error.message);
-	})
-	
+	try {
+		const result = await firebase.auth().getRedirectResult();
+		result.user && dispatch({type: "SET_USER", user: result.user.displayName})
+	} catch(err) {
+		console.log("error", err.message);
+	}
+	dispatch({type: "LOADING", loading: false});
 }
 	
 
-export const signOut = () => (dispatch) => {
-	firebase.auth().signOut()
-		.then(() => {
-			dispatch({type: "SIGN_OUT"})
-		})
-		.catch(error => console.log(error.message));
+export const signOut = () => async (dispatch) => {
+	try {
+		await firebase.auth().signOut();
+		dispatch({type: "SIGN_OUT"});
+	} catch(err) {
+		console.log("error", err.message);
+	}
 }
 
