@@ -1,14 +1,12 @@
 "use strict";
 
 const socketIO = require("socket.io");
-const database_listeners = require("../listeners/database_listeners");
-const action_listeners = require("../listeners/action_listeners");
+const {addedPollsDatabaseListener, deletePollDatabaseListener, voteDatabaseListener} = require("../listeners/database_listeners");
+const {voteActionListener, addPollActionListener, deletePollActionListener} = require("../listeners/action_listeners");
 const config = require("../database/client_key");
 
 
-const socketServer = (server, database) => {
-	const {addedPollsDatabaseListener, deletePollDatabaseListener, voteDatabaseListener} = database_listeners;
-	const {voteActionListener, addPollActionListener, deletePollActionListener} = action_listeners;
+const socketServer = (server, session, database) => {
 	const io = socketIO.listen(server);
 
 	io.on("connection", socket => {
