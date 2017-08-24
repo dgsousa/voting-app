@@ -7,11 +7,11 @@ export const redirectToLogin = () => {
 };
 
 export const getCredentials = async (store, socket) => {
+	console.log("getCredentials");
 	const {dispatch} = store;
 	try {
 		const result = await firebase.auth().getRedirectResult();
 		const user = result.user && result.user.displayName;
-		dispatch({type: "SET_USER", user});
 		socket.emit("login", user);
 	} catch(err) {
 		console.log("error", err.message);
@@ -19,19 +19,18 @@ export const getCredentials = async (store, socket) => {
 	dispatch({type: "LOADING"});
 };
 
-// export const getSession = store => {
-// 	console.log("getSession")
-// 	const {dispatch} = store;
-// 	const {user} = sessionStorage;
-// 	dispatch({type: "SET_USER", user});
-// 	dispatch({type: "LOADING"});
-// }
+export const getUser = (store, user) => {
+	console.log("getUser");
+	const {dispatch} = store;
+	dispatch({type: "SET_USER", user});
+	dispatch({type: "LOADING"});
+}
 	
 
 export const signOut = () => async (dispatch) => {
 	try {
 		await firebase.auth().signOut();
-		dispatch({type: "SIGN_OUT"});
+		socket.emit("logout", null);
 	} catch(err) {
 		console.log("error", err.message);
 	}

@@ -17217,11 +17217,11 @@ const redirectToLogin = () => {
 
 
 const getCredentials = async (store, socket) => {
+	console.log("getCredentials");
 	const {dispatch} = store;
 	try {
 		const result = await __WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().getRedirectResult();
 		const user = result.user && result.user.displayName;
-		dispatch({type: "SET_USER", user});
 		socket.emit("login", user);
 	} catch(err) {
 		console.log("error", err.message);
@@ -17231,19 +17231,20 @@ const getCredentials = async (store, socket) => {
 /* harmony export (immutable) */ __webpack_exports__["getCredentials"] = getCredentials;
 
 
-// export const getSession = store => {
-// 	console.log("getSession")
-// 	const {dispatch} = store;
-// 	const {user} = sessionStorage;
-// 	dispatch({type: "SET_USER", user});
-// 	dispatch({type: "LOADING"});
-// }
+const getUser = (store, user) => {
+	console.log("getUser");
+	const {dispatch} = store;
+	dispatch({type: "SET_USER", user});
+	dispatch({type: "LOADING"});
+}
+/* harmony export (immutable) */ __webpack_exports__["getUser"] = getUser;
+
 	
 
 const signOut = () => async (dispatch) => {
 	try {
 		await __WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().signOut();
-		dispatch({type: "SIGN_OUT"});
+		socket.emit("logout", null);
 	} catch(err) {
 		console.log("error", err.message);
 	}
@@ -33392,14 +33393,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var socket = (0, _socket2.default)();
 
-socket.on("data", function (data) {
+socket.on("config", function (data) {
 	var config = data.config,
 	    user = data.user;
 
 	var database = (0, _database2.default)(config);
 	var store = (0, _store2.default)(database);
 	(0, _event_listeners2.default)(store, database);
-	(0, _authorization.getCredentials)(store, socket);
+	user ? (0, _authorization.getUser)(store, user) : (0, _authorization.getCredentials)(store, socket);
+	socket.on("data", store.dispatch);
 
 	_reactDom2.default.render(_react2.default.createElement(
 		_reactRedux.Provider,

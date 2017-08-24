@@ -3,9 +3,9 @@ const sharedSession = require("express-socket.io-session");
 
 
 const login = socket => user => {
-	socket.handshake.sessoin.user = user;
+	socket.handshake.session.user = user;
 	socket.handshake.session.save();
-	socket.emit("data", {type: "SIGN_IN", user});
+	socket.emit("data", {type: "SET_USER", user});
 }
 
 const logout = socket => user => {
@@ -25,7 +25,7 @@ const socketServer = (server, session, config) => {
 
 	io.on("connection", socket => {
 		const user = socket.handshake.session.user || null;
-		socket.emit("data", {config, user});
+		socket.emit("config", {config, user});
 		socket.on("login", login(socket));
 		socket.on("logout", logout(socket));
 	})
