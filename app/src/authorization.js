@@ -6,9 +6,15 @@ export const redirectToLogin = () => {
 	firebase.auth().signInWithRedirect(provider);
 }
 
-export const getCredentials = (store, config) => {
+export const getCredentials = async (store, config) => {
 	const dispatch = store.dispatch;
 	firebase.initializeApp(config);
+	try {
+		const result = firebase.auth().getRedirectResult();
+		const user = result.user && result.user.displayName;
+	} catch(err) {
+		console.log("error", err.message);
+	}
 	firebase.auth().getRedirectResult().then(result => {
 		if(result.credential) {
 			dispatch({

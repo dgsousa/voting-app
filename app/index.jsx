@@ -13,7 +13,8 @@ import "./scss/styles.scss";
 
 const socket = io();
 const store = createStoreWithMiddleWareAndSocket(socket);
-socket.on("config", config => {
+socket.on("init", data => {
+	const {config, user} = data;
 	getCredentials(store, config);
 	socket.on("data", store.dispatch);
 })
