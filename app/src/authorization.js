@@ -12,22 +12,20 @@ export const getCredentials = async (store, socket, config) => {
 	firebase.initializeApp(config);
 	try {
 		const result = await firebase.auth().getRedirectResult();
-		const user = result.user && result.user.displayName || null;
-		socket.emit("login", user);
+		user = result.user && result.user.displayName || null;
 	} catch(err) {
 		console.log("error", err.message);
 	}
-
-	dispatch({type: "LOADING"});
-	
+	socket.emit("login", user);
 }
 	
 
-export const signOut = () => (dispatch) => {
-	firebase.auth().signOut()
-		.then(() => {
-			dispatch({type: "SIGN_OUT"})
-		})
-		.catch(error => console.log(error.message));
+export const signOut = () => async (dispatch, getState, socket) => {
+	try {
+		await firebase.auth().signOut();
+	} catch(err) {
+		console.log("error", err.message);
+	}
+	socket.emit("logout", null);
 }
 

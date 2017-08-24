@@ -77,8 +77,8 @@ const userReducer = (state = null, action) => {
 
 const loadingReducer = (state = true, action) => {
 	switch(action.type) {
-	case "LOADING":
-		return action.loading;
+	case "SET_USER":
+		return false;
 	}
 	return state;
 }
