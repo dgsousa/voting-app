@@ -13,7 +13,7 @@ import "./scss/styles.scss";
 
 const socket = io();
 
-socket.on("data", data => {
+socket.on("config", data => {
 	const {config, user} = data;
 	const database = createDatabase(config);
 	const store = createStoreWithMiddleWareAndDatabase(database);
