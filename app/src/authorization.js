@@ -2,20 +2,30 @@ import * as firebase from "firebase";
 
 
 export const redirectToLogin = () => {
-	const provider = new firebase.auth.GithubAuthProvider();
+	const provider = new firebase.auth.GoogleAuthProvider();
 	firebase.auth().signInWithRedirect(provider);
-}
+};
 
-export const getCredentials = async (store) => {
-	const dispatch = store.dispatch;
+export const getCredentials = async (store, socket) => {
+	const {dispatch} = store;
 	try {
 		const result = await firebase.auth().getRedirectResult();
-		result.user && dispatch({type: "SET_USER", user: result.user.displayName})
+		const user = result.user && result.user.displayName;
+		dispatch({type: "SET_USER", user});
+		socket.emit("login", user);
 	} catch(err) {
 		console.log("error", err.message);
 	}
-	dispatch({type: "LOADING", loading: false});
-}
+	dispatch({type: "LOADING"});
+};
+
+// export const getSession = store => {
+// 	console.log("getSession")
+// 	const {dispatch} = store;
+// 	const {user} = sessionStorage;
+// 	dispatch({type: "SET_USER", user});
+// 	dispatch({type: "LOADING"});
+// }
 	
 
 export const signOut = () => async (dispatch) => {
@@ -25,5 +35,5 @@ export const signOut = () => async (dispatch) => {
 	} catch(err) {
 		console.log("error", err.message);
 	}
-}
+};
 
