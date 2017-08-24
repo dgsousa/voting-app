@@ -6,29 +6,19 @@ export const redirectToLogin = () => {
 	firebase.auth().signInWithRedirect(provider);
 }
 
-export const getCredentials = async (store, config) => {
-	const dispatch = store.dispatch;
+export const getCredentials = async (store, socket, config) => {
+	const {dispatch} = store;
+	let user;
 	firebase.initializeApp(config);
 	try {
-		const result = firebase.auth().getRedirectResult();
-		const user = result.user && result.user.displayName;
+		const result = await firebase.auth().getRedirectResult();
+		const user = result.user && result.user.displayName || null;
+		socket.emit("login", user);
 	} catch(err) {
 		console.log("error", err.message);
 	}
-	firebase.auth().getRedirectResult().then(result => {
-		if(result.credential) {
-			dispatch({
-				type: "SET_USER",
-				user: result.user.displayName
-			});
-		}
-		dispatch({ 
-			type: "LOADING", 
-			loading: false 
-		});
-	}).catch(error => {
-		console.log("error", error.message);
-	})
+
+	dispatch({type: "LOADING"});
 	
 }
 	
