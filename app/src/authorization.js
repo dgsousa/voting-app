@@ -6,18 +6,19 @@ export const redirectToLogin = () => {
 	firebase.auth().signInWithRedirect(provider);
 }
 
-export const getCredentials = async (store, socket, config) => {
-	const {dispatch} = store;
-	let user;
+export const getCredentials = async (store, socket, config, sessionUser) => {
 	firebase.initializeApp(config);
+	if(sessionUser) return store.dispatch({type: "SET_USER", user: sessionUser});
 	try {
 		const result = await firebase.auth().getRedirectResult();
-		user = result.user && result.user.displayName || null;
+		const user = result.user && result.user.displayName || null;
+		socket.emit("login", user);
 	} catch(err) {
 		console.log("error", err.message);
 	}
-	socket.emit("login", user);
 }
+
+
 	
 
 export const signOut = () => async (dispatch, getState, socket) => {

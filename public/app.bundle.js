@@ -17142,6 +17142,8 @@ function error() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_firebase__ = __webpack_require__(336);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_firebase__);
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 
 
 const redirectToLogin = () => {
@@ -17151,32 +17153,40 @@ const redirectToLogin = () => {
 /* harmony export (immutable) */ __webpack_exports__["b"] = redirectToLogin;
 
 
-const getCredentials = (store, config) => {
-	const dispatch = store.dispatch;
-	__WEBPACK_IMPORTED_MODULE_0_firebase__["initializeApp"](config);
-	__WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().getRedirectResult().then(result => {
-		if (result.credential) {
-			dispatch({
-				type: "SET_USER",
-				user: result.user.displayName
-			});
+const getCredentials = (() => {
+	var _ref = _asyncToGenerator(function* (store, socket, config, sessionUser) {
+		__WEBPACK_IMPORTED_MODULE_0_firebase__["initializeApp"](config);
+		if (sessionUser) return store.dispatch({ type: "SET_USER", user: sessionUser });
+		try {
+			const result = yield __WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().getRedirectResult();
+			const user = result.user && result.user.displayName || null;
+			socket.emit("login", user);
+		} catch (err) {
+			console.log("error", err.message);
 		}
-		dispatch({
-			type: "LOADING",
-			loading: false
-		});
-	}).catch(error => {
-		console.log("error", error.message);
 	});
-};
+
+	return function getCredentials(_x, _x2, _x3, _x4) {
+		return _ref.apply(this, arguments);
+	};
+})();
 /* harmony export (immutable) */ __webpack_exports__["a"] = getCredentials;
 
 
-const signOut = () => dispatch => {
-	__WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().signOut().then(() => {
-		dispatch({ type: "SIGN_OUT" });
-	}).catch(error => console.log(error.message));
-};
+const signOut = () => (() => {
+	var _ref2 = _asyncToGenerator(function* (dispatch, getState, socket) {
+		try {
+			yield __WEBPACK_IMPORTED_MODULE_0_firebase__["auth"]().signOut();
+		} catch (err) {
+			console.log("error", err.message);
+		}
+		socket.emit("logout", null);
+	});
+
+	return function (_x5, _x6, _x7) {
+		return _ref2.apply(this, arguments);
+	};
+})();
 /* harmony export (immutable) */ __webpack_exports__["c"] = signOut;
 
 
@@ -31849,8 +31859,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 const socket = __WEBPACK_IMPORTED_MODULE_4_socket_io_client___default()();
 const store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__src_store_js__["a" /* default */])(socket);
-socket.on("config", config => {
-	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__src_authorization__["a" /* getCredentials */])(store, config);
+socket.on("init", data => {
+	const { config, user } = data;
+	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__src_authorization__["a" /* getCredentials */])(store, socket, config, user);
 	socket.on("data", store.dispatch);
 });
 
@@ -31933,8 +31944,8 @@ const userReducer = (state = null, action) => {
 
 const loadingReducer = (state = true, action) => {
 	switch (action.type) {
-		case "LOADING":
-			return action.loading;
+		case "SET_USER":
+			return false;
 	}
 	return state;
 };
