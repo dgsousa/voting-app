@@ -7,10 +7,29 @@ import {StaticRouter as Router} from "react-router-dom";
 import Routes from "../app/components/Routes.jsx";
 import appReducer from "../app/reducers/reducer";
 
-const handleRender = (file) => (req, res) => {
-	const context = {};
 
+const setupInitialState = (val, store) => {
+	Object.keys(val).forEach(key => {
+		const poll = val[key];
+		store.dispatch({
+			type: "ADD_POLL",
+			id: key,
+			topic: poll.topic,
+			creator: poll.creator,
+			options: poll.options,
+			voted: poll.voted
+		})
+	});
+	return JSON.stringify(store.getState());
+}
+
+
+const handleRender = (file, database) => async (req, res) => {
+	const context = {};
 	const store = createStore(appReducer);
+	const snap = await database.ref("/polls/").once("value");
+	const val = snap.val();
+	const initialState = setupInitialState(val, store);
 
 	const reactComponent = renderToString(
 		<Provider store={store}>
@@ -22,11 +41,9 @@ const handleRender = (file) => (req, res) => {
 		</Provider>
 	)
 
-	if(context.url) {
-		res.writeHead(302, { Location: 302 });
-	} else {
-		res.status(200).render(file, {reactComponent});
-	}
+	context.url ? 
+		res.writeHead(302, { Location: 302 }) : 
+		res.status(200).render(file, {reactComponent, initialState});
 };
 
 

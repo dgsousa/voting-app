@@ -9,7 +9,6 @@ const path = require("path");
 const server = require("http").createServer(app);
 const favicon = require("serve-favicon");
 const firebase = require("firebase");
-const axios = require("axios");
 
 //Files
 const socketServer = require("./socket/socket_server.js");
@@ -33,7 +32,7 @@ app.use(favicon('./public/images/vote.png'));
 
 app.set("view engine", "ejs");
 
-app.use("/", handleRender(index));
+app.use("/", handleRender(index, database));
 
 //Set up the server
 server.listen(process.env.PORT || 3000);

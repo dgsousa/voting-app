@@ -1,7 +1,7 @@
 "use strict";
 
 const addedPollsDatabaseListener = (socket, database) => 
-	database.ref("/polls/").on("child_added", snap => {
+	database.ref("/polls/").on("child_changed", snap => {
 		const val = snap.val();
 		const key = snap.key;
 		socket.emit("data", {
@@ -12,20 +12,18 @@ const addedPollsDatabaseListener = (socket, database) =>
 			options: val.options,
 			voted: val.voted
 		});
-	})
-
-
-const deletePollDatabaseListener = (socket, database) =>
+	});
+	
+const deletePollDatabaseListener = (socket, database) => 
 	database.ref("/polls/").on("child_removed", snap => {
 		const id = snap.key;
 		socket.emit("data", {
 			type: "DELETE_POLL",
 			id
 		});
-	})
+	});
 
-
-const voteDatabaseListener = (socket, database) =>
+const voteDatabaseListener = (socket, database) => 
 	database.ref("/polls/").on("child_changed", snap => {
 		const id = snap.key;
 		const {options, voted} = snap.val();
@@ -35,9 +33,8 @@ const voteDatabaseListener = (socket, database) =>
 			options,
 			voted
 		});
-	})
-
-
+	});
+	
 
 module.exports = {
 	addedPollsDatabaseListener,
