@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import {Route, Redirect} from "react-router-dom";
 
@@ -11,11 +11,11 @@ let EnsureLoggedIn = ({user}) => user ?
 	<div>
 		<Route path="/mypolls" component={MyPolls}/>
 		<Route path="/newpoll" component={NewPollContainer}/>
-	</div>
- 	: <Redirect to="/"/>
+	</div>	: 
+	<Redirect to="/"/>;
 
 
-const mapStateToProps = (state) => {user: state.user};
+const mapStateToProps = (state) => ({user: state.user});
 
 
 const EnsureLoggedInContainer = connect(mapStateToProps)(EnsureLoggedIn);

@@ -4,7 +4,7 @@ import * as firebase from "firebase";
 export const redirectToLogin = () => {
 	const provider = new firebase.auth.TwitterAuthProvider();
 	firebase.auth().signInWithRedirect(provider);
-}
+};
 
 export const getCredentials = async (store, socket, config, sessionUser) => {
 	firebase.initializeApp(config);
@@ -14,19 +14,16 @@ export const getCredentials = async (store, socket, config, sessionUser) => {
 		const user = result.user && result.user.displayName || null;
 		socket.emit("login", user);
 	} catch(err) {
-		console.log("error", err.message);
+		throw err;
 	}
-}
-
-
-	
+};
 
 export const signOut = () => async (dispatch, getState, socket) => {
 	try {
 		await firebase.auth().signOut();
 	} catch(err) {
-		console.log("error", err.message);
+		throw err;
 	}
 	socket.emit("logout", null);
-}
+};
 

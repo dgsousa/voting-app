@@ -5,11 +5,11 @@ const Twitter = ({tweet}) =>
 	<div className="twitter">
 		{ 	!!tweet && 
 			<Link 
-				to={"https:\/\/twitter.com/intent/tweet?text=" + tweet}  
+				to={"https://twitter.com/intent/tweet?text=" + tweet}  
 				target="_blank">
 				<img src="/static/images/twitter.svg" width="30px"/>
 			</Link>
 		}
-	</div>
+	</div>;
 
 export default Twitter;

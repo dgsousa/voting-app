@@ -1,5 +1,7 @@
-"use strict";
-
+require("babel-core/register")({
+	"presets": ["es2015", "react", "stage-1"]
+})
+require("babel-polyfill");
 //Packages
 const express = require("express");
 const app = express();
@@ -7,12 +9,13 @@ const path = require("path");
 const server = require("http").createServer(app);
 const favicon = require("serve-favicon");
 const firebase = require("firebase");
-
+const axios = require("axios");
 
 //Files
 const socketServer = require("./socket/socket_server.js");
 const database = require("./database");
 const index = path.join(__dirname + "/views/index.ejs");
+const handleRender = require("./handleRender");
 
 //Set up the session
 const session = require("express-session")({
@@ -30,9 +33,7 @@ app.use(favicon('./public/images/vote.png'));
 
 app.set("view engine", "ejs");
 
-app.use("/", (req, res) => {
-	res.render(index, {});
-});
+app.use("/", handleRender(index));
 
 //Set up the server
 server.listen(process.env.PORT || 3000);

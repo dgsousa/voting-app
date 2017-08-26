@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {NavLink} from "react-router-dom";
 
 
 import {vote} from "../../actions/actionCreators.js";
@@ -14,13 +13,13 @@ class Ballot extends Component {
 		this.state = {
 			option: "",
 			hasVoted: false
-		}
+		};
 		this.handleChange = this.handleChange.bind(this);
 		this.castVote = this.castVote.bind(this);
 	}
 
 	hasVoted(voted) {
-		if(voted) this.setState({hasVoted: true})
+		if(voted) this.setState({hasVoted: true});
 	}
 
 	componentWillMount() {
@@ -33,7 +32,7 @@ class Ballot extends Component {
 
 	}
 
-	castVote(e) {
+	castVote() {
 		const {voted, id} = this.props;
 		const {option} = this.state;
 		this.props.vote(id, option);
@@ -42,8 +41,8 @@ class Ballot extends Component {
 	} 
 
 	render() {
-		const {id, options, user, vote, voted} = this.props;
-		const {option, hasVoted} = this.state;
+		const {options, voted} = this.props;
+		const {hasVoted} = this.state;
 		
 		return (
 			<div className="ballot">
@@ -59,7 +58,7 @@ class Ballot extends Component {
 				</div>
 				{voted && hasVoted && <span>You've already voted on this poll.</span>}
 			</div>
-		)
+		);
 	}
 }
 
@@ -69,16 +68,16 @@ const mapStateToProps = (state, ownProps) => {
 	const options = state.polls[id] && Object.keys(state.polls[id].options) || [];
 	const voted = state.polls[id] && Object.keys(state.polls[id].voted).indexOf(state.user) > -1;
 	return { id, options, voted };
-}
+};
 
 
 
-Ballot = withRouter(connect(
+const BallotContainer = withRouter(connect(
 	mapStateToProps, 
 	{vote}
 )(Ballot));
 
-export default Ballot;
+export default BallotContainer;
 
 
 

@@ -16,8 +16,8 @@ class Chart extends Component {
 			return {
 				["option"]: key,
 				["votes"]: options[key]
-			}
-		})
+			};
+		});
 	}
 
 	mountChart() {
@@ -30,7 +30,7 @@ class Chart extends Component {
 
 	updateChart() {
 		const {options} = this.props;
-		this.chart.update(options)
+		this.chart.update(options);
 	}
 
 	componentDidMount() {
@@ -38,7 +38,7 @@ class Chart extends Component {
 	}
 
 	componentDidUpdate() {
-		this.chart ? this.updateChart() : this.mountChart()
+		this.chart ? this.updateChart() : this.mountChart();
 	}
 
 	componentWillUnmount() {
@@ -46,7 +46,7 @@ class Chart extends Component {
 	}
 
 	render() {
-		return <div className="chart"></div>
+		return <div className="chart"></div>;
 	}
 }
 
@@ -57,9 +57,9 @@ const mapStateToProps = (state, ownProps) => ({
 
 
 
-Chart = connect(
+const ChartContainer = connect(
 	mapStateToProps
 )(Chart);
 	
 
-export default Chart;
+export default ChartContainer;

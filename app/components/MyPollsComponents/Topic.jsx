@@ -10,7 +10,7 @@ class Topic extends Component {
 		this.deleteMyPoll = this.deleteMyPoll.bind(this);
 	}
 
-	deleteMyPoll(e) {
+	deleteMyPoll() {
 		const {id, deletePoll} = this.props;
 		deletePoll(id);
 	}
@@ -27,7 +27,7 @@ class Topic extends Component {
 					X
 				</button>
 			</li>
-		)
+		);
 	}
 }
 
@@ -35,12 +35,12 @@ class Topic extends Component {
 const mapStateToProps = (state, ownProps) => ({
 	polls: state.polls,
 	id: ownProps.id
-})
+});
 
-Topic = connect(
+const TopicContainer = connect(
 	mapStateToProps,
 	{deletePoll}
 )(Topic);
 
-export default Topic;
+export default TopicContainer;
 

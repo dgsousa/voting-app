@@ -49,20 +49,20 @@ export default class DonutChart {
 			.style("width", "150px")
 			.style("border-radius", "5px")
 			.style("border", "2px solid black")
-			.style("text-align", "center")
+			.style("text-align", "center");
 	}
 
 	onMouseOut(tooltip) {
 		return function() {
 			d3.select(this).style("opacity", 1);
-			return tooltip.style("visibility", "hidden")
-		}
+			return tooltip.style("visibility", "hidden");
+		};
 	}
 
 	onMouseOver(tooltip) {
 		return function() {
 			return tooltip.style("visibility", "visible");
-		}
+		};
 	}
 
 	onMouseMove(tooltip) {
@@ -71,7 +71,7 @@ export default class DonutChart {
 				.style("opacity", .7);
 			return tooltip.style("top", `${event.pageY - 110}px`).style("left", `${event.pageX + 10}px`)
 				.html(`<h3>${d.data.key}: ${d.data.value}</h3>`);
-		}
+		};
 	}
 
 	unmount() {
@@ -79,18 +79,18 @@ export default class DonutChart {
 	}
 
 	arcTween(a) {
-        var interpolated = d3.interpolate(this.originalAngles, a);
-        this.originalAngles = interpolated(0);
+		var interpolated = d3.interpolate(this.originalAngles, a);
+		this.originalAngles = interpolated(0);
 
-        return t => {
-            return this.arc(interpolated(t));
-        };
-    }
+		return t => {
+			return this.arc(interpolated(t));
+		};
+	}
 
 	
 	create(data) {
 		
-		const {svg, arc, pie, tooltip, color} = this;
+		const {arc, pie, tooltip, color} = this;
 	
 		this.path = this.g.selectAll("path")
 			.data(pie(d3.entries(data)))
@@ -100,17 +100,17 @@ export default class DonutChart {
 			.on("mousemove", this.onMouseMove(tooltip))
 			.attr("fill", (d, i) => color(i))
 			.attr("stroke", "#0c0701")
-			.attr("d", arc)
+			.attr("d", arc);
 
 	}
 
 	update(data) {
-		const {svg, arc, pie, tooltip, color} = this;
+		const {arc, pie, tooltip, color} = this;
 
 		this.path
-            .data(pie(d3.entries(data)))
-            .transition().duration(1000)
-            .attrTween("d", this.arcTween.bind(this));
+			.data(pie(d3.entries(data)))
+			.transition().duration(1000)
+			.attrTween("d", this.arcTween.bind(this));
 		
 		this.path
 			.data(pie(d3.entries(data)))
@@ -120,7 +120,7 @@ export default class DonutChart {
 			.on("mousemove", this.onMouseMove(tooltip))
 			.attr("fill", (d, i) => color(i))
 			.attr("stroke", "#0c0701")
-			.attr("d", arc)
+			.attr("d", arc);
 	}
 
 }

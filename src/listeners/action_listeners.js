@@ -24,9 +24,25 @@ const deletePollActionListener = database => data => {
 	database.ref("polls/" + id + "/").remove();
 }
 
+const loginEventListener = socket => user => {
+	socket.handshake.session.user = user;
+    socket.handshake.session.save();
+    socket.emit("data", {type: "SET_USER", user});
+}
+
+const logoutEventListener = socket => user => {
+	if (socket.handshake.session.user) {
+        delete socket.handshake.session.user;
+        socket.handshake.session.save();
+    }
+    socket.emit("data", {type: "SIGN_OUT"});
+}
+
 
 module.exports = {
 	voteActionListener,
 	addPollActionListener,
-	deletePollActionListener
+	deletePollActionListener,
+	loginEventListener,
+	logoutEventListener
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
-import axios from "axios";
 import io from "socket.io-client";
 
 
@@ -18,7 +17,7 @@ socket.on("init", data => {
 	const {config, user} = data;
 	getCredentials(store, socket, config, user);
 	socket.on("data", store.dispatch);
-})
+});
 
 
 ReactDOM.render(

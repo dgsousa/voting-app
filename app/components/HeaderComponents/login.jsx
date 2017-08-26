@@ -7,12 +7,12 @@ let Login = ({user, signOut}) =>
 		className="login" 
 		onClick={ user ? signOut : redirectToLogin }>
 		<span>{user ? "Logout" : "Login"}</span>
-	</button>
+	</button>;
 
 
 const mapStateToProps = (state) => ({
 	user: state.user
-})
+});
 
 
 Login = connect(

@@ -10,6 +10,6 @@ const NavBar = ({user}) =>
 		{ user && <NavLink to="/mypolls" activeClassName="active"><span>My Polls</span></NavLink> }
 		{ user && <NavLink to="/newpoll" activeClassName="active"><span>New Poll</span></NavLink> }
 		<Login />
-	</div>
+	</div>;
 
 export default NavBar;

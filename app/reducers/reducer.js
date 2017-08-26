@@ -1,4 +1,4 @@
- import {combineReducers} from "redux";
+import {combineReducers} from "redux";
 
 
 
@@ -10,25 +10,25 @@ const pollsReducer = (state = {}, action) => {
 		return {
 			...state,
 			[action.id]: pollReducer(state[action.id], action)
-		}
+		};
 	
 	case "DELETE_POLL":
 		return {
 			...state,
 			[action.id]: null
-		}
+		};
 	}
 	return state;
-}
+};
 
 
 const topicReducer = (state = null, action) => {
 	switch(action.type) {
 	case "ADD_POLL":
-		return action.topic
+		return action.topic;
 	}
 	return state;
-}
+};
 
 
 
@@ -38,7 +38,7 @@ const creatorReducer = (state = null, action) => {
 		return action.creator;
 	}
 	return state;
-}
+};
 
 
 const votedReducer = (state = {}, action) => {
@@ -47,10 +47,10 @@ const votedReducer = (state = {}, action) => {
 	case "VOTE": 
 		return {
 			...action.voted
-		}
+		};
 	}
 	return state;
-}
+};
 
 
 const optionsReducer = (state = {}, action) => {
@@ -59,10 +59,10 @@ const optionsReducer = (state = {}, action) => {
 	case "VOTE":
 		return {
 			...action.options
-		}
+		};
 	}
 	return state;
-}
+};
 
 const userReducer = (state = null, action) => {
 	switch(action.type) {
@@ -71,33 +71,13 @@ const userReducer = (state = null, action) => {
 	case "SIGN_OUT":
 		return null;
 	}
-
 	return state;
-}
-
-const loadingReducer = (state = true, action) => {
-	switch(action.type) {
-	case "SET_USER":
-		return false;
-	}
-	return state;
-}
-
-const destinationReducer = (state = {}, action) => {
-	switch(action.type) {
-	case "SET_DESTINATION":
-		return {
-			...state
-		}
-	}
-	return state;
-}
+};
 
 
 const appReducer = combineReducers({
 	polls: pollsReducer,
-	user: userReducer,
-	loading: loadingReducer
+	user: userReducer
 });
 
 
@@ -106,7 +86,7 @@ const pollReducer = combineReducers({
 	creator: creatorReducer,
 	voted: votedReducer,
 	options: optionsReducer
-})
+});
 
 
 

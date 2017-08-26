@@ -11,7 +11,7 @@ let Header = ({user, tweet}) =>
 	<div className="header">
 		<Twitter tweet={tweet}/>
 		<NavBar user={user}/>
-	</div>
+	</div>;
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,8 +20,8 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		user: state.user,
 		tweet: tweet
-	}
-}
+	};
+};
 
 
 Header = connect(mapStateToProps)(Header); 

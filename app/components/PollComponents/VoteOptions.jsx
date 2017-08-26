@@ -6,14 +6,13 @@ const VoteOptions = ({options, onChange}) =>
 		{options.map((option, index) => 
 			<li key={index}>
 				<button 
-				  	value={option}
-				  	onClick={onChange}>
-				 {option}
-				 </button>
-				 
+					value={option}
+					onClick={onChange}>
+					{option}
+				</button>
 			</li>
 		)}
-	</ul>
+	</ul>;
 
 
 
