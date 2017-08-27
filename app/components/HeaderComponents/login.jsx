@@ -1,8 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+
 import {redirectToLogin, signOut} from "../../src/authorization";
 import {connect} from "react-redux";
 
-let Login = ({user, signOut}) =>
+const Login = ({user, signOut}) =>
 	<button 
 		className="login" 
 		onClick={ user ? signOut : redirectToLogin }>
@@ -15,9 +18,13 @@ const mapStateToProps = (state) => ({
 });
 
 
-Login = connect(
+Login.PropTypes = {
+	user: PropTypes.string.isRequired,
+	signOut: PropTypes.func.isRequired
+};
+
+export default connect(
 	mapStateToProps,
 	{signOut}
 )(Login);
 
-export default Login;

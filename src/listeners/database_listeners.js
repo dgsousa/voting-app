@@ -1,7 +1,7 @@
 "use strict";
 
 const addedPollsDatabaseListener = (socket, database) => 
-	database.ref("/polls/").on("child_changed", snap => {
+	database.ref("/polls/").on("child_added", snap => {
 		const val = snap.val();
 		const key = snap.key;
 		socket.emit("data", {

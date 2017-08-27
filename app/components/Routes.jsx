@@ -6,7 +6,7 @@ import { Route, Switch} from "react-router-dom";
 import Home from "./HomeComponents/Home.jsx";
 import Header from "./HeaderComponents/Header.jsx";
 import Poll from "./PollComponents/Poll.jsx";
-import EnsureLoggedInContainer from "./EnsureLoggedInContainer.jsx";
+import EnsureLoggedIn from "./EnsureLoggedIn.jsx";
 
 
 const Routes = () =>
@@ -16,7 +16,7 @@ const Routes = () =>
 			<Switch>
 				<Route exact path="/" component={Home}/>
 				<Route path="/polls/:id" component={Poll}/>
-				<Route component={EnsureLoggedInContainer} />
+				<Route component={EnsureLoggedIn} />
 			</Switch>
 		</div>
 	</div>;

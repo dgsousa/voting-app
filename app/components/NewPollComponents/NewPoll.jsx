@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {addPoll} from "../../actions/actionCreators.js";
-
+import PropTypes from "prop-types";
 
 import SubmitNewPoll from "./SubmitNewPoll.jsx";
 
@@ -53,14 +53,17 @@ const mapStateToProps = (state) => ({
 	user: state.user
 });
 
+NewPoll.PropTypes = {
+	user: PropTypes.string.isRequired,
+	addPoll: PropTypes.func.isRequired
+};
 
-const NewPollContainer = connect(
+
+export default connect(
 	mapStateToProps,	
 	{addPoll}
 )(NewPoll);
 
-
-export default NewPollContainer;
 
 
 

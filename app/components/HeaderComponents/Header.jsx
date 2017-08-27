@@ -1,13 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
-
+import PropTypes from "prop-types";
 
 import Twitter from "./Twitter.jsx";
 import NavBar from "./NavBar.jsx";
 
 
 
-let Header = ({user, tweet}) => 
+const Header = ({user, tweet}) => 
 	<div className="header">
 		<Twitter tweet={tweet}/>
 		<NavBar user={user}/>
@@ -23,8 +23,12 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
+Header.PropTypes = {
+	user: PropTypes.string.isRequired,
+	tweet: PropTypes.string.isRequired
+};
 
-Header = connect(mapStateToProps)(Header); 
+
+export default connect(mapStateToProps)(Header); 
 
 
-export default Header;

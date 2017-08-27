@@ -1,17 +1,17 @@
 import React from "react";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
-
-import ChartContainer from "./Chart.jsx";
-import BallotContainer from "./Ballot.jsx";
+import Chart from "./Chart.jsx";
+import Ballot from "./Ballot.jsx";
 import Title from "./Title.jsx";
 
-let Poll = ({poll}) => 
+const Poll = ({poll}) => 
 	<div className="poll">
 		<Title poll={poll}/>
 		<div className="panel">
-			<BallotContainer poll={poll}/>
-			<ChartContainer poll={poll}/>
+			<Ballot poll={poll}/>
+			<Chart poll={poll}/>
 		</div>
 	</div>;
 
@@ -22,7 +22,12 @@ const mapStateToProps = (state, ownProps) => ({
 	}, null)
 });
 
-Poll = connect(mapStateToProps)(Poll);
+
+Poll.PropTypes = {
+	poll: PropTypes.object.isRequired
+};
 
 
-export default Poll;
+export default connect(mapStateToProps)(Poll);
+
+

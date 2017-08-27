@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 
 const VoteOptions = ({options, onChange}) =>
 	<ul>
@@ -14,7 +14,10 @@ const VoteOptions = ({options, onChange}) =>
 		)}
 	</ul>;
 
-
+VoteOptions.PropTypes = {
+	options: PropTypes.array.isRequired,
+	onChange: PropTypes.func.isRequired
+};
 
 
 export default VoteOptions;

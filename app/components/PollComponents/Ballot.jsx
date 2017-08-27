@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-
+import PropTypes from "prop-types";
 
 import {vote} from "../../actions/actionCreators.js";
 import VoteOptions from "./VoteOptions.jsx";
@@ -71,13 +71,20 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 
+Ballot.PropTypes = {
+	id: PropTypes.string.isRequired,
+	options: PropTypes.array.isRequired,
+	voted: PropTypes.bool.isRequired,
+	vote: PropTypes.func.isRequired
+};
 
-const BallotContainer = withRouter(connect(
+
+export default withRouter(connect(
 	mapStateToProps, 
 	{vote}
 )(Ballot));
 
-export default BallotContainer;
+
 
 
 

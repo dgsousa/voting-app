@@ -8,7 +8,8 @@ import Routes from "../app/components/Routes.jsx";
 import appReducer from "../app/reducers/reducer";
 
 
-const setupInitialState = (val, store) => {
+const setupInitialState = (snap, store) => {
+	const val = snap.val();
 	Object.keys(val).forEach(key => {
 		const poll = val[key];
 		store.dispatch({
@@ -28,8 +29,7 @@ const handleRender = (file, database) => async (req, res) => {
 	const context = {};
 	const store = createStore(appReducer);
 	const snap = await database.ref("/polls/").once("value");
-	const val = snap.val();
-	const initialState = setupInitialState(val, store);
+	const initialState = setupInitialState(snap, store);
 
 	const reactComponent = renderToString(
 		<Provider store={store}>

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Twitter = ({tweet}) => 
 	<div className="twitter">
@@ -10,5 +11,10 @@ const Twitter = ({tweet}) =>
 			</a>
 		}
 	</div>;
+
+Twitter.PropTypes = {
+	tweet: PropTypes.string.isRequired
+};
+
 
 export default Twitter;

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
 
 import {deletePoll} from "../../actions/actionCreators.js";
 
@@ -37,10 +38,17 @@ const mapStateToProps = (state, ownProps) => ({
 	id: ownProps.id
 });
 
-const TopicContainer = connect(
+Topic.PropTypes = {
+	polls: PropTypes.object.isRequired,
+	id: PropTypes.string.isRequired,
+	deletePoll: PropTypes.func.isRequired
+};
+
+
+export default connect(
 	mapStateToProps,
 	{deletePoll}
 )(Topic);
 
-export default TopicContainer;
+
 

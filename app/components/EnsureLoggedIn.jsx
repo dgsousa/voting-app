@@ -1,16 +1,17 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Route, Redirect} from "react-router-dom";
+import PropTypes from "prop-types";
 
 //components
 import MyPolls from "./MyPollsComponents/MyPolls.jsx";
-import NewPollContainer from "./NewPollComponents/NewPoll.jsx";
+import NewPoll from "./NewPollComponents/NewPoll.jsx";
 
 
 let EnsureLoggedIn = ({user}) => user ? 
 	<div>
 		<Route path="/mypolls" component={MyPolls}/>
-		<Route path="/newpoll" component={NewPollContainer}/>
+		<Route path="/newpoll" component={NewPoll}/>
 	</div>	: 
 	<Redirect to="/"/>;
 
@@ -18,7 +19,9 @@ let EnsureLoggedIn = ({user}) => user ?
 const mapStateToProps = (state) => ({user: state.user});
 
 
-const EnsureLoggedInContainer = connect(mapStateToProps)(EnsureLoggedIn);
 
+EnsureLoggedIn.PropTypes = {
+	user: PropTypes.string.isRequired
+};
 
-export default EnsureLoggedInContainer;
+export default connect(mapStateToProps)(EnsureLoggedIn);

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {findDOMNode} from "react-dom";
+import PropTypes from "prop-types";
 
 import DonutChart from "../../d3_components/DonutChart.js";
 
@@ -55,11 +56,13 @@ const mapStateToProps = (state, ownProps) => ({
 	options: ownProps.poll && ownProps.poll.options || {}
 });
 
+Chart.PropTypes = {
+	options: PropTypes.object.isRequired
+};
 
 
-const ChartContainer = connect(
+
+export default connect(
 	mapStateToProps
 )(Chart);
 	
-
-export default ChartContainer;

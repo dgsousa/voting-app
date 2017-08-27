@@ -1,9 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
-
-let Home = ({polls}) => 
+const Home = ({polls}) => 
 	<div className="poll-list">
 		<h1>Choose a Poll</h1>
 		<ul>
@@ -26,9 +26,11 @@ const mapStateToProps = (state) => ({
 	polls: state.polls
 });
 
+Home.PropTypes = {
+	polls: PropTypes.object.isRequired
+};
+
 	
-Home = connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Home);
 
-
-export default Home;
 

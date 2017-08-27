@@ -1,15 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
+
+import Topic from "./Topic.jsx";
 
 
-import TopicContainer from "./Topic.jsx";
 
-
-
-let MyPolls = ({polls, user}) => {
+const MyPolls = ({polls, user}) => {
 
 	const topics = Object.keys(polls).map(id => {
-		if(polls[id] && polls[id].creator === user) return <TopicContainer key={id} id={id}/>;
+		if(polls[id] && polls[id].creator === user) return <Topic key={id} id={id}/>;
 	});
 
 	return (
@@ -29,11 +29,14 @@ const mapStateToProps = (state) => ({
 	user: state.user
 });
 
+
+MyPolls.PropTypes = {
+	polls: PropTypes.object.isRequired,
+	user: PropTypes.string.isRequired
+};
 	
 
-MyPolls = connect(
+export default connect(
 	mapStateToProps
 )(MyPolls);
 
-
-export default MyPolls;
