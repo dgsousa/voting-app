@@ -152,7 +152,11 @@ button {
         .main .poll-list ul li a, .main .poll-list ul li span {
           color: white;
           vertical-align: middle;
-          text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+          text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+          display: block;
+          height: 100%; }
+        .main .poll-list ul li a {
+          padding-top: 1%; }
         .main .poll-list ul li .delete {
           background: transparent;
           border: none;

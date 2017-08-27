@@ -196,6 +196,12 @@ button {
                     color: white;
                     vertical-align: middle;
                     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+                    display: block;
+                    height: 100%;
+                }
+
+                a {
+                    padding-top: 1%;
                 }
 
                 .delete {

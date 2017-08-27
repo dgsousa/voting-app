@@ -48,3 +48,6 @@ const handleRender = (file, database) => async (req, res) => {
 
 
 module.exports = handleRender;
+
+
+
