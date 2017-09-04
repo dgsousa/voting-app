@@ -34,6 +34,7 @@ app.set("view engine", "ejs");
 
 app.use("/", handleRender(index, database));
 
+
 //Set up the server
 server.listen(process.env.PORT || 3000);
 

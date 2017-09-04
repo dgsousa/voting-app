@@ -10,17 +10,13 @@ import appReducer from "../app/reducers/reducer";
 
 const setupInitialState = (snap, store) => {
 	const val = snap.val();
-	Object.keys(val).forEach(key => {
-		const poll = val[key];
+	Object.keys(val).forEach(key =>
 		store.dispatch({
 			type: "ADD_POLL",
 			id: key,
-			topic: poll.topic,
-			creator: poll.creator,
-			options: poll.options,
-			voted: poll.voted
+			...val[key]
 		})
-	});
+	);
 	return JSON.stringify(store.getState());
 }
 

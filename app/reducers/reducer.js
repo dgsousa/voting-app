@@ -1,8 +1,6 @@
 import {combineReducers} from "redux";
 
 
-
-
 const pollsReducer = (state = {}, action) => {
 	switch(action.type) {
 	case "VOTE":
