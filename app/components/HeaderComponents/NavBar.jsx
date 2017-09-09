@@ -2,7 +2,7 @@ import React from "react";
 import {NavLink} from "react-router-dom";
 import PropTypes from "prop-types";
 
-import Login from "./LoginComponent.jsx";
+import Login from "./Login.jsx";
 
 const NavBar = ({user}) =>
 	<div className="navbar">
