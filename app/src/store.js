@@ -9,8 +9,7 @@ const createStoreWithMiddleWareAndSocket = socket =>
 		appReducer,
 		initialState,
 		compose(
-			applyMiddleware(thunk.withExtraArgument(socket)),
-			window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+			applyMiddleware(thunk.withExtraArgument(socket))
 		)
 	);
 
