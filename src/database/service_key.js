@@ -1,29 +1,31 @@
 const pkl1 = process.env.PKL1;
-const pkl2 = "qrJ1ygHLgXvDn3Niru9Gc0ngH3kH6MDvc5AEzSBY9/gzdu6BQfXM3oqAUGoG/8UE";
-const pkl3 = "koPD+Dj8O+TZQgsLi4rKwyBQk0SnKpBGxYeTOSotzu6gJTWkRpjfYpqAGY14yzhd";
-const pkl4 = "U6/q4iv+I6bkbMIK/E2esHMo5c+e26r1lnFxVaFYUyTukaqZZdcvN2ewu3KYNvw5";
-const pkl5 = "nyGfU0QlGP0Du7KBFfPigOmM4R3jPLx04ixAhwGBsphQ6Wxs0QEIglH53+4WGIBD";
-const pkl6 = "NMkOgqvpEUM28Brx996JZntPHcYQXRBnxkkCjIGfU3/R0uKckUFvAYJrLI0S24ef";
-const pkl7 = "Q1Avg9B9AgMBAAECggEACns0nuuGxuQT+L9bdrV/QrlhZVBZcw7WJmLZpD8xKewb";
-const pkl8 = "HrXx4nJ4mWS2RuvBo9VD6DAldQauftPROcnezhKLM2vZSZkkqBsLOETVvTq+F1XZ";
-const pkl9 = "+YrurpSqmyrmQRMQrUwdIFSJfGpEtd0HYMP7Wo1YHlAOmKbRERoARGentTSNRque";
-const pkl10 = "6n74d+kc67bIcYQecCJTebv8bm0EuiyKueHT/o4xzywhKg0K7vLV4LCIaUq4uhuU";
-const pkl11 = "6A59BKAYCmSP8U49/f+FG6F/2MhnE+OetG7NebglU/tR/tTnNPrnJPp2ZVU42HwG";
-const pkl12 = "GUwX2sf4qvW1E14NHiad9tspyABJ/fC7dwcU6W+8gQKBgQDq4FF+38yDwBYkv7/H";
-const pkl13 = "K/VLcfLhcpdjt6PAwjbP7jcgJCA/2XdTrJ/xX1x9hhsQnSbfboTUmB/rCAqhn8uk";
-const pkl14 = "HEA/qIa+qOrITEYIwEmsKi4sEOqeLUGQ75bL723IdJe71V8zAyiIxlQ16UNqpITM";
-const pkl15 = "NMYJC3gJyDm3mkrX9UX4ZkPxsQKBgQDNa6ANAqaazBiPB342etM8jTb628AYrII3";
-const pkl16 = "yMC8bdqa2MyC2oHUyUkjjunnwRAtPqpHWKJh+Z2ACNsTE/Qz/6MInFicAZG+s/O3";
-const pkl17 = "/NeXuk56l0A2qEQ9jMpUZqFpTb5QEbktI6eM5h5MiRVHKK8H7ADgEHs88dicj42L";
-const pkl18 = "M/7Yeb1SjQKBgAsLpYl76NhBTklIIzKwpIZ5w1xK0UfFORQ1jfJVV45RZJrcFTqA";
-const pkl19 = "Ib1uKKFWjytG2K8lOWXuCYI6DJXxN9ht46+as0uAEhp9S8XZlR1dlnJIEWCC7FRu";
-const pkl20 = "j/7jMZx9ry0MKb/yZBOakBdA8wSu2/fme3GtcmWzXtN9lAt342R9GrDhAoGADSYd";
-const pkl21 = "eZe42GHGFKmzH4OfL9oOMeKNGkc4kp+MDsOtYYoNFTctZlR4FQmZ2VbXVT4Uojp/";
-const pkl22 = "MmxK854df8wgLo/nfK6dUWccUCuupxFNL44iZeB2oMkGjTYM4XgsTtRGIVPxGX2V";
-const pkl23 = "xQQZ3mZL8WEeSxCFQdJsQQtuBR9/PPDYGD06rCUCgYEAt/VVnrX0vpwfOl0xx/lq";
-const pkl24 = "Hb12iYbwdyF12DJqUhX3/Mc8Ov+nGRIyOJZiM+EVmEaIypqfB+VvzUz36h0LARKB";
-const pkl25 = "N+DhPgiQe6tKHu4cbIFGZ48PQ8bjcfT8b1UiG+IDfarG9mjrvdo5B5ujhvyoig5T";
-const pkl26 = "mcOUS99UQVrLSmULZZwnKgU=";
+const pkl2 = process.env.PKL2;
+const pkl3 = process.env.PKL3;
+const pkl4 = process.env.PKL4;
+const pkl5 = process.env.PKL5;
+const pkl6 = process.env.PKL6;
+const pkl7 = process.env.PKL7;
+const pkl8 = process.env.PKL8;
+const pkl9 = process.env.PKL9;
+const pkl10 = process.env.PKL10;
+const pkl11 = process.env.PKL11;
+const pkl12 = process.env.PKL12;
+const pkl13 = process.env.PKL13;
+const pkl14 = process.env.PKL14;
+const pkl15 = process.env.PKL15;
+const pkl16 = process.env.PKL16;
+const pkl17 = process.env.PKL17;
+const pkl18 = process.env.PKL18;
+const pkl19 = process.env.PKL19;
+const pkl20 = process.env.PKL20;
+const pkl21 = process.env.PKL21;
+const pkl22 = process.env.PKL22;
+const pkl23 = process.env.PKL23;
+const pkl24 = process.env.PKL24;
+const pkl25 = process.env.PKL25;
+const pkl26 = process.env.PKL26;
+
+console.log(process.env[`PKL${1}`]);
 
 
 
