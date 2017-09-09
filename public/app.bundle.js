@@ -30427,7 +30427,7 @@ Login.PropTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Login_jsx__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LoginComponent_jsx__ = __webpack_require__(220);
 
 
 
@@ -30464,7 +30464,7 @@ const NavBar = ({ user }) => __WEBPACK_IMPORTED_MODULE_0_react___default.a.creat
 			"New Poll"
 		)
 	),
-	__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Login_jsx__["a" /* default */], null)
+	__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__LoginComponent_jsx__["a" /* default */], null)
 );
 
 NavBar.PropTypes = {
