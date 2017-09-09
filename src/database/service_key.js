@@ -30,45 +30,17 @@ const getApiKey = () => {
 	for(let i = 1; i <= 26; i++) {
 		key += process.env[`PKL${i}`] + "\n";
 	}
-	console.log(key);
+	return key;
 }
 
-getApiKey();
+const key = getApiKey();
 
 
 module.exports = {
 	"type": "service_account",
 	"project_id": "voting-app-9a2b1",
 	"private_key_id": "4620d74309b3c80719c68aa4aae495de3f979291", //stored in heroku
-	"private_key": `-----BEGIN PRIVATE KEY-----
-			${pkl1}
-			${pkl2}
-			${pkl3}
-			${pkl4}
-			${pkl5}
-			${pkl6}
-			${pkl7}
-			${pkl8}
-			${pkl9}
-			${pkl10}
-			${pkl11}
-			${pkl12}
-			${pkl13}
-			${pkl14}
-			${pkl15}
-			${pkl16}
-			${pkl17}
-			${pkl18}
-			${pkl19}
-			${pkl20}
-			${pkl21}
-			${pkl22}
-			${pkl23}
-			${pkl24}
-			${pkl25}
-			${pkl26}
------END PRIVATE KEY-----
-		`, //stored in heroku
+	"private_key": `-----BEGIN PRIVATE KEY-----\n${key}-----END PRIVATE KEY-----\n`, //stored in heroku
 	"client_email": "firebase-adminsdk-eo9zs@voting-app-9a2b1.iam.gserviceaccount.com",
 	"client_id": "107222254891823127170", //stored in heroku
 	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
