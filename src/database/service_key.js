@@ -1,4 +1,4 @@
-const pkl1 = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC8eF/czABbaxsT";
+const pkl1 = process.env.PKL1;
 const pkl2 = "qrJ1ygHLgXvDn3Niru9Gc0ngH3kH6MDvc5AEzSBY9/gzdu6BQfXM3oqAUGoG/8UE";
 const pkl3 = "koPD+Dj8O+TZQgsLi4rKwyBQk0SnKpBGxYeTOSotzu6gJTWkRpjfYpqAGY14yzhd";
 const pkl4 = "U6/q4iv+I6bkbMIK/E2esHMo5c+e26r1lnFxVaFYUyTukaqZZdcvN2ewu3KYNvw5";
