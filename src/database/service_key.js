@@ -25,6 +25,13 @@ const pkl24 = process.env.PKL24;
 const pkl25 = process.env.PKL25;
 const pkl26 = process.env.PKL26;
 
+function getApiKey = () => {
+	let key;
+	for(let i = 1; i <= 26; i++) {
+		key += process.env[`PKL${i}`] + "\n";
+	}
+	console.log(key);
+}
 
 
 module.exports = {
