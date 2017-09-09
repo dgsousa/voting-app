@@ -37,6 +37,8 @@ const handleRender = (file, database) => async (req, res) => {
 		</Provider>
 	)
 
+	console.log(reactComponent)
+
 	context.url ? 
 		res.writeHead(302, { Location: 302 }) : 
 		res.status(200).render(file, {reactComponent, initialState});
