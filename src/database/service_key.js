@@ -33,6 +33,8 @@ function getApiKey = () => {
 	console.log(key);
 }
 
+getApiKey();
+
 
 module.exports = {
 	"type": "service_account",
