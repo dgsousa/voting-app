@@ -2,7 +2,7 @@ module.exports = {
   "type": "service_account",
   "project_id": "voting-app-9a2b1",
   "private_key_id": process.env.SERVICE_PRIVATE_KEY_ID, //stored in heroku
-  "private_key": process.env.SERVICE_PRIVATE_KEY, //stored in heroku
+  "private_key": `-----BEGIN PRIVATE KEY-----\n${process.env.SERVICE_PRIVATE_KEY}\n-----END PRIVATE KEY-----\n`, //stored in heroku
   "client_email": "firebase-adminsdk-eo9zs@voting-app-9a2b1.iam.gserviceaccount.com",
   "client_id": process.env.SERVICE_CLIENT_ID, //stored in heroku
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
