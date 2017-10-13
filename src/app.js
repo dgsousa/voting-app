@@ -1,3 +1,4 @@
+require("newrelic");
 require("babel-core/register")({
 	"presets": ["es2015", "react", "stage-1"]
 })
@@ -24,6 +25,7 @@ const session = require("express-session")({
 })
 const sharedSession = require("express-socket.io-session")(session);
 app.use(session);
+
 
 
 //Send Static Files
