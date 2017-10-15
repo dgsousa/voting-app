@@ -1,3 +1,4 @@
+require("newrelic");
 require("babel-core/register")({
 	"presets": ["es2015", "react", "stage-1"]
 })
@@ -21,7 +22,7 @@ const session = require("express-session")({
     secret: "firebase",
     resave: true,
     saveUninitialized: true
-})
+});
 const sharedSession = require("express-socket.io-session")(session);
 app.use(session);
 
