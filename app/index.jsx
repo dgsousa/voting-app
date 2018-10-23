@@ -13,8 +13,8 @@ import "./scss/styles.scss";
 
 const socket = io();
 const store = createStoreWithMiddleWareAndSocket(socket);
-socket.on("init", data => {
-	const {config, user} = data;
+socket.on("init", (initialData) => {
+	const {config, user} = initialData;
 	getCredentials(store, socket, config, user);
 	socket.on("data", store.dispatch);
 });

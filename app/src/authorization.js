@@ -7,9 +7,9 @@ export const redirectToLogin = () => {
 };
 
 export const getCredentials = async (store, socket, config, sessionUser) => {
-	firebase.initializeApp(config);
-	if(sessionUser) return store.dispatch({type: "SET_USER", user: sessionUser});
 	try {
+		firebase.initializeApp(config);
+		if(sessionUser) return store.dispatch({type: "SET_USER", user: sessionUser});
 		const result = await firebase.auth().getRedirectResult();
 		const user = result.user && result.user.displayName || null;
 		socket.emit("login", user);

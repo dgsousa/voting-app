@@ -31263,8 +31263,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 const socket = __WEBPACK_IMPORTED_MODULE_3_socket_io_client___default()();
 const store = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__src_store_js__["a" /* default */])(socket);
-socket.on("init", data => {
-	const { config, user } = data;
+socket.on("init", initialData => {
+	const { config, user } = initialData;
 	__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__src_authorization__["a" /* getCredentials */])(store, socket, config, user);
 	socket.on("data", store.dispatch);
 });

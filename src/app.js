@@ -1,4 +1,4 @@
-require("newrelic");
+
 require("babel-core/register")({
 	"presets": ["es2015", "react", "stage-1"]
 })
@@ -9,7 +9,7 @@ const app = express();
 const path = require("path");
 const server = require("http").createServer(app);
 const favicon = require("serve-favicon");
-const firebase = require("firebase");
+
 
 //Files
 const socketServer = require("./socket/socket_server.js");
